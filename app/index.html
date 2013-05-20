@@ -1,28 +1,370 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="explorer">
 <head>
   <meta charset="utf-8">
-  <title>My AngularJS App</title>
-  <link rel="stylesheet" href="css/app.css"/>
+  <title>Data Explorer</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.3.custom.min.css">
+  <!-- <link rel="stylesheet" href="css/bootstrap-responsive.min.css"> -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/standardHeader.css">
+  <!-- <link href="css/usgs-common.css" rel="stylesheet" media="screen"> -->
+  <!-- <link href="css/usgs-ibc-se-common.css" rel="stylesheet" media="screen"> -->
+  <style>
+    [ng-cloak] {
+      display: none;
+    }
+
+    #myCarousel {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0;
+      width: 700px;
+    }
+
+    .cssgradients .fadeToWhite {
+      background: -moz-linear-gradient(#000, #f5f5f5);
+      background: -webkit-linear-gradient(top, #000 0%, #f5f5f5);
+    }
+
+    .no-js .fadeToWhite,
+    .no-cssgradients .fadeToWhite {
+      background: url(img/gradient.png) 0 0 repeat;
+    }
+
+    .borderradius .shadowbox {
+      border: 1px solid #141414;
+      -webkit-border-radius: 12px;
+      -moz-border-radius: 12px;
+      border-radius: 12px;
+    }
+
+    .boxshadow .shadowbox {
+      border: none;
+      -webkit-box-shadow: rgba(0,0,0, .5) 3px 3px 6px;
+      -moz-box-shadow: rgba(0,0,0, .5) 3px 3px 6px;
+      box-shadow: rgba(0,0,0, .5) 3px 3px 6px;
+    }
+
+    .sticky.stuck {
+      position: fixed;
+      top: 0;
+      margin-top: 2px;
+      margin-bottom: 10px;
+    }
+
+    .navbar.stuck {
+      width: 100%;
+      opacity: .75;
+      z-index: 1;
+    }
+
+    .navbar.stuck:hover {
+      opacity: 1;
+    }
+
+    .collection-menu.stuck {
+      width: 700px;
+    }
+
+    .stuck .carousel-caption .hide-stuck {
+      display: none;
+    }
+
+    .carousel-caption {
+      position: relative;
+    }
+
+    .fornav {
+        position:relative;
+        margin-left:-22px;
+        top:-3px;
+        z-index:2;
+    }
+
+    #bd {
+      background-color: #f5f5f5;
+    }
+
+    #collections {
+      padding-top: 10px;
+    }
+
+    .collection {
+      background-color: #fff;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+    }
+
+    .collection:hover {
+      background-color: #dcecf7;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<body ng-cloak>
+<!-- ScienceBase Header Template -->
+<div id="usgscolorband" class="visible-desktop">
+  <div id="usgsbanner">
+    <span id="env-beta" onclick="this.style.display='none';"
+    title="Beta is a preview of ongoing work and this system, application or page is in Beta.  As a result it will be in a constant state of change as its being worked on. Instability, faults, flaws or errors maybe encountered due to ongoing changes. Data contained, or associated with this system, application or page can and will be changing also. This may cause some items to be displayed incorrectly. This is not to be considered the finshed version of the system, application or page.">BETA</span>
+    <div id="usgsidentifier"><a href="http://www.usgs.gov/">
+      <img src="img/usgs/header_graphic_usgsIdentifier_white.jpg"
+        alt="USGS - science for a changing world"
+        title="U.S. Geological Survey Home Page"
+        width="178" height="72"/></a>
+    </div>
+    <div id="usgsccsabox">
+      <div id="usgsccsa">
+        <br><a href="http://www.usgs.gov/">USGS Home</a>
+        <br><a href="http://www.usgs.gov/ask/">Contact USGS</a>
+        <br><a href="http://www.usgs.gov/search/">Search USGS</a>
+      </div>
+    </div>
+  </div>
+</div>
+<img src="img/usgs/sciencebase_earth.png" class="image-float visible-desktop"/>
+<!-- ScienceBase Header Template -->
+<div id="bd">
+  <div id="carousel-container" class="fadeToWhite">
+    <div class="navbar navbar-inverse sticky shadowbox">
+      <div class="navbar-inner">
+        <a class="brand" href="index.html">Data Explorer</a>
+        <form name="search" class="navbar-search pull-right"
+          data-bind="submit: doSearch.bind($data, {})">
+          <div class="input-append" data-bind="visible: updated()">
+            <input name="q" data-bind='value: q, valueUpdate: "afterkeydown"'
+              type="text" class="search-query" placeHolder="Search Data Collections">
+            <span class="fornav"><i class="icon-search"></i></span>
+          </div>
+        </form>
+      </div>
+    </div>
 
-  <div ng-view></div>
+    <div id="myCarousel" class="carousel slide shadowbox">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+        <li data-target="#myCarousel" data-slide-to="6"></li>
+        <li data-target="#myCarousel" data-slide-to="7"></li>
+        <li data-target="#myCarousel" data-slide-to="8"></li>
+        <li data-target="#myCarousel" data-slide-to="9"></li>
+        <li data-target="#myCarousel" data-slide-to="10"></li>
+        <li data-target="#myCarousel" data-slide-to="11"></li>
+        <li data-target="#myCarousel" data-slide-to="12"></li>
+        <li data-target="#myCarousel" data-slide-to="13"></li>
+        <li data-target="#myCarousel" data-slide-to="14"></li>
+        <li data-target="#myCarousel" data-slide-to="15"></li>
+        <li data-target="#myCarousel" data-slide-to="16"></li>
+        <li data-target="#myCarousel" data-slide-to="17"></li>
+        <li data-target="#myCarousel" data-slide-to="18"></li>
+      </ol>
+    <!-- Carousel items -->
+      <div class="carousel-inner">
+        <div class="active item">
+          <img src="img/slides/AtmosphereClimate.png"/>
+          <div class="collection-menu">
+            <div class="carousel-caption">
+              <h4>Item title of nice looking item</h4>
+              <p class="hide-stuck">Collection it belongs in</p>
+            </div>
+          </div>
+        </div>
+        <div class="item"><img src="img/slides/ClimateChange.png"/></div>
+        <div class="item"><img src="img/slides/DataToolsTechnology.png"/></div>
+        <div class="item"><img src="img/slides/EarthCharacteristics.png"/></div>
+        <div class="item"><img src="img/slides/EcologyEnvironment.png"/></div>
+        <div class="item"><img src="img/slides/EnergyMinerals.png"/></div>
+        <div class="item"><img src="img/slides/EnvironmentalIssues.png"/></div>
+        <div class="item"><img src="img/slides/GeographicAnalysisMapping.png"/></div>
+        <div class="item"><img src="img/slides/GeologicalProcesses.png"/></div>
+        <div class="item"><img src="img/slides/HydrologicalProcesses.png"/></div>
+        <div class="item"><img src="img/slides/MappingRemoteSensingGeospatialData.png"/></div>
+        <div class="item"><img src="img/slides/NaturalHazards.png"/></div>
+        <div class="item"><img src="img/slides/OceansCoastlines.png"/></div>
+        <div class="item"><img src="img/slides/PlanetaryScience.png"/></div>
+        <div class="item"><img src="img/slides/Planets.png"/></div>
+        <div class="item"><img src="img/slides/PlantsAnimals.png"/></div>
+        <div class="item"><img src="img/slides/TechniquesMethods.png"/></div>
+        <div class="item"><img src="img/slides/Water.png"/></div>
+        <div class="item"><img src="img/slides/WaterResources.png"/></div>
+      </div>
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+  </div>
+  <div id="collections">
+    <div class="container">
+      <div class="row">
+        <div class="span6">
+          <div class="collection shadowbox">
+            <h4>Biocomplexity Thesaurus</h4>
+            <p>
+              Development of the Biocomplexity Thesaurus began in 2002-2003 through a partnership between the former USGS NBII Program and ProQuest (formerly CSA), a worldwide information company with more than 30 years experience as a leading bibliographic database provider. The original Biocomplexity Thesaurus, first made available online in 2003, was a merger of five individual thesauri
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>Biodiversity Information Serving Our Nation (BISON)</h4>
+            <p>
+              Researchers collect species occurrence data, records of an organism at a particular time in a particular place, as a primary or ancillary function of many biological field investigations. Presently, these data reside in numerous distributed systems and formats (including publications) and are consequently not being used to their full potential. As a step toward addressing this challenge, the Core Science Analytics and Synthesis (CSAS) program of the US Geological Survey (USGS) is developing Biodiversity Information Serving Our Nation (BISON), an integrated and permanent resource for biological occurrence data from the United States.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>CSA/ProQuest Citations and Abstracts from Scientific Scholarly Literature</h4>
+            <p>
+              The citations and abstracts in this collection from Cambridge Scientific Abstracts/ProQuest provide summary metadata describing articles published in a wide range of peer-reviewed scientific journals, largely between 1990-2011. The topical scope of this collection includes terrestrial and aquatic ecology and biology; wildlife and zoonotic diseases; renewable energy; genetic biodiversity; species of conservation concern; pollinator issues; and invasive species.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS Library Catalog</h4>
+            <p>
+              This record describes the USGS Library Catalog, an online resource for searching the hard copy materials of the USGS Library System. The following excerpts are taken from the USGS Libraries Program brochure as an overview.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS-NPS Vegetation Characterization Program</h4>
+            <p>
+              The USGS-NPS Vegetation Characterization Program is a cooperative effort by the U.S. Geological Survey (USGS) and the National Park Service Inventory &amp; Monitoring - Vegetation Inventory Program to classify, describe, and map vegetation communities in more than 280 national park units across the United States. Through this undertaking a variety of data and information on vegetation is being made available to Internet users through this website.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>NGGDPP - National Geological and Geophysical Data Preservation Program</h4>
+            <p>
+              This NGGDPP community organizes information in three levels below the community. Just below the Community are folders for each of the contributing agencies.  Under each of these agency folders are folders representing geological and geophysical collections registered by the contributing agency with the National Digital Catalog.  At the lowest level, under each of the collection folders are the individual item metdata records which have been uploaded by the agencies. More information about the National Digital Catalog is available at: http://datapreservation.usgs.gov/
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>The National Geologic Map Database (ScienceBase resource collection)</h4>
+            <p>
+              The National Geologic Map Database Project (NGMDB) is a collaborative effort primarily involving the USGS and the Association of American State Geologists (AASG).
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>Powell Center Data Catalog</h4>
+            <p>
+              The John Wesley Powell Center for Earth System Analysis and Synthesis supports proposal driven working groups to examine some of the most pressing questions and needs for scientific synthesis across the USGS Mission Areas. Working groups are funded to work with existing data as opposed to collecting new data, and the data synthesis results of all projects are published along with journal articles and other products. ScienceBase provides the data backbone for Powell Center working groups. It is used to catalog data and information resources used by the working groups and is the repository for products coming out of the working groups. Wherever possible, new data from working groups are made part of some larger data system or collection in ScienceBase. ScienceBase is also used to publish algorithms, models, synthesized information products, and other artifacts from the research process.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS Field Records Collection</h4>
+            <p>
+              The USGS Field Records Collection is an archive of unpublished field notes, maps, correspondence, manuscripts, analysis reports, and other data created or collected by USGS Geology Discipline scientists during field studies and other project work. Located in the Central Region Library in Denver, Colorado, the collection is available for on-premises examination during normal library hours. See the Denver Library home page for schedules and location information.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS Photographic Library</h4>
+            <p>
+              The U.S. Geological Survey Denver Library maintains a collection of over 400,000 photographs taken during geologic studies of the United States and its territories from 1868 to the present.
 
-  <div>Angular seed app: v<span app-version></span></div>
+              These images provide a visual history of the discovery, development, and sciences of the United States and its Geological Survey. Some photographs have been used in USGS publications, but most have never been published.
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-  -->
-  <script src="lib/angular/angular.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
+              Currently, this website represents less than 10 percent of the Library's images with approximately 30,000 photographs on-line. 
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS Publications Warehouse</h4>
+            <p>
+              The USGS Publications Warehouse is a metadata clearinghouse of all USGS Series Publications produced by the bureau since 1879. It is managed and operated as part of the USGS Library System.
+            </p>  
+          </div>
+        </div>
+
+        <div class="span6">
+          <div class="collection shadowbox">
+            <h4>Ice Cores of the National Ice Core Laboratory</h4>
+            <p>
+              The U.S. National Ice Core Laboratory (NICL) is a facility for storing, curating, and studying ice cores recovered from the polar regions of the world. It provides scientists with the capability to conduct examinations and measurements on ice cores, and it preserves the integrity of these ice cores in a long-term repository for current and future investigations.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>Integrated Taxonomic Information System (ITIS)</h4>
+            <p>
+              Here you will find authoritative taxonomic information on plants, animals, fungi, and microbes of North America and the world. We are a  partnership  of U.S.,  Canadian , and  Mexican  agencies ( ITIS-North America ); other organizations; and taxonomic specialists. ITIS is also a partner of  Species 2000  and the  Global Biodiversity Information Facility (GBIF) . The ITIS and Species 2000  Catalogue of Life (CoL) partnership is proud to provide the taxonomic backbone to the  Encyclopedia of Life (EOL) .
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>Multistate Aquatic Resources Information System (MARIS)</h4>
+            <p>
+              The Multistate Aquatic Resources Information System (MARIS) is a cooperative effort between state and federal agencies to share fisheries information collected as part of ongoing sampling programs. MARIS data is owned and provided by participating state natural resource management agencies, while technical support and hosting are currently provided by the Core Science Analytics and Synthesis Program of the U.S. Geological Survey. Acting through a MARIS Steering Committee, partners collaborate on the content, design, and administration of MARIS.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>National Fish Habitat Partnership</h4>
+            <p>
+              Test Catalog for the National Fish Habitat Partnership, which includes locally-driven efforts that build private and public partnerships to improve fish habitat. Fish Habitat Action Plan partnerships are self-identified, self-organized, and self-directed communities of interest formed around geographic areas, keystone species, or system types. Community Home website: http://fishhabitat.org/
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>NSDI Cooperative Agreements Program</h4>
+            <p>
+              The NSDI Cooperative Agreements Program (CAP) is an annual program to assist the geospatial data community through funding and other resources in implementing the components of the NSDI. This program is open to State, local and Tribal governments, academia, commercial, and non-profit organizations. This program provides small seed grants to initiate sustainable on-going NSDI implementations. 
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS Aquatic Gap Analysis Program</h4>
+            <p>
+              The Aquatic Gap Program is an element of the overall USGS Gap Analysis Program, focusing on species found in coastal and inland waters. The goal of the National Aquatic GAP is to evaluate aquatic biological diversity and aquatic habitats using spatial analysis and habitat suitability models to identify gaps in species distribution and work toward more effective conservation prioritization. The Aquatic GAP analysis process, while still in progress in many regions of the United States, has already produced a large amount of modeled fish, crayfish and mussel distribution data for certain regions.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>National Atlas</h4>
+            <p>
+              Maps of America are what you'll find and make on nationalatlas.gov™. Maps of innovation and vision that illustrate our changing Nation. Maps that capture and depict the patterns, conditions, and trends of American life. Maps that supplement interesting articles. Maps that tell their own stories. Maps that cover all of the United States or just your area of interest. Maps that are accurate and reliable from more than 20 Federal organizations. Maps about America's people, heritage, and resources. Maps that will help you, your children, your colleagues, and your friends understand the United States and its place in the world.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS Gap Analysis Program (GAP)</h4>
+            <p>
+              The Gap Analysis Program (GAP) is an element of the U.S. Geological Survey. We help implement the Department of Interior’s goals of inventory, monitoring, research, and information transfer. GAP has three primary goals:
+              <ol>
+                <li>Identify conservation gaps that help keep common species common;</li>
+                <li>Provide conservation information to the public so that informed resource management decisions can be made; and</li>
+                <li>Facilitate the application of GAP data and analysis to specific resource management activities.</li>
+              </ol>
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>USGS National Paleontological Database</h4>
+            <p>
+              The USGS National Paleontological Database is a developing project to catalog and make available information about paleontological samples and details such as species observations by individual paleontologists. Several different databases and indexes will be aggregated to create this data resource, with ScienceBase taking on the role of original master data source for some legacy collections. The database and this ScienceBase community will be organized into various collections and sets of data based on their original sources. Items found in the community will generally be records of samples with associated details about when, how, and where they were collected along with observations made on the samples by paleontologists.
+            </p>  
+          </div>
+          <div class="collection shadowbox">
+            <h4>The National Map</h4>
+            <p>
+              As one of the cornerstones of the U.S. Geological Survey's (USGS) National Geospatial Program, The National Map is a collaborative effort among the USGS and other Federal, State, and local partners to improve and deliver topographic information for the Nation. It has many uses ranging from recreation to scientific analysis to emergency response. The National Map is easily accessible for display on the Web, as products and services, and as downloadable data. The geographic information available from The National Map includes orthoimagery (aerial photographs), elevation, geographic names, hydrography, boundaries, transportation, structures, and land cover.
+            </p>  
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
+  
+<script src="lib/angular/angular.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+<script src="lib/modernizr/modernizr-latest.js"></script>
+<script src="lib/jquery/jquery-1.9.1.js"></script>
+<script src="lib/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="lib/bootstrap/bootstrap.min.js"></script>
+<script src="lib/jquery-waypoints/waypoints.min.js"></script>
+<script src="lib/jquery-waypoints/waypoints-sticky.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.sticky').waypoint('sticky');
+  });
+</script>
 </body>
 </html>

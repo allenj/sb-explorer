@@ -1,0 +1,427 @@
+@font-face {
+    font-family: 'TeXGyreHerosRegular';
+    src: url('../font/Gyre-Heros/texgyreheros-regular-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheros-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheros-regular-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheros-regular-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheros-regular-webfont.svg#TeXGyreHerosRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosItalic';
+    src: url('../font/Gyre-Heros/texgyreheros-italic-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheros-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheros-italic-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheros-italic-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheros-italic-webfont.svg#TeXGyreHerosItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosBold';
+    src: url('../font/Gyre-Heros/texgyreheros-bold-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheros-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheros-bold-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheros-bold-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheros-bold-webfont.svg#TeXGyreHerosBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosBoldItalic';
+    src: url('../font/Gyre-Heros/texgyreheros-bolditalic-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheros-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheros-bolditalic-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheros-bolditalic-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheros-bolditalic-webfont.svg#TeXGyreHerosBoldItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosCnRegular';
+    src: url('../font/Gyre-Heros/texgyreheroscn-regular-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheroscn-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheroscn-regular-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheroscn-regular-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheroscn-regular-webfont.svg#TeXGyreHerosCnRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosCnItalic';
+    src: url('../font/Gyre-Heros/texgyreheroscn-italic-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheroscn-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheroscn-italic-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheroscn-italic-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheroscn-italic-webfont.svg#TeXGyreHerosCnItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosCnBold';
+    src: url('../font/Gyre-Heros/texgyreheroscn-bold-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheroscn-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheroscn-bold-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheroscn-bold-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheroscn-bold-webfont.svg#TeXGyreHerosCnBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+@font-face {
+    font-family: 'TeXGyreHerosCnBoldItalic';
+    src: url('../font/Gyre-Heros/texgyreheroscn-bolditalic-webfont.eot');
+    src: url('../font/Gyre-Heros/texgyreheroscn-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/Gyre-Heros/texgyreheroscn-bolditalic-webfont.woff') format('woff'),
+         url('../font/Gyre-Heros/texgyreheroscn-bolditalic-webfont.ttf') format('truetype'),
+         url('../font/Gyre-Heros/texgyreheroscn-bolditalic-webfont.svg#TeXGyreHerosCnBoldItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	font-weight:100;
+
+}
+
+body {
+		font-family:'TeXGyreHerosRegular';
+		font-weight:100;
+		background-color: #f5f5f5;
+}
+
+#content div {
+
+	box-sizing:border-box;
+	-moz-box-sizing: border-box;
+}
+
+.allCaps {
+	text-transform:capitalize;
+}
+
+/**************************************News Template***********************************************************/
+h1, h2, h3, h4 {
+	margin:0;
+	padding:0;
+}
+
+p {
+	font-family: 'TeXGyreHerosRegular'
+	font-weight:100;
+}
+
+h1 {
+	font-family:'TeXGyreHerosCnBold';
+	font-weight:100;
+	text-transform: uppercase;
+}
+
+#real_time h2 {
+	font-size: 1.2em;
+	text-transform:uppercase;
+	font-family: 'TeXGyreHerosCnBold';
+	font-weight:100;
+	letter-spacing: 0.03em;
+}
+
+.section_content {
+	border: 17px solid #f1f2f2;
+	font-family:'TeXGyreHerosRegular';
+	padding: 0 1.5em;
+	float:right;
+	margin-bottom: 3em;
+	margin-left:-1.1em;
+}
+
+.section_content p {
+	font-size: .8em;
+	margin:0;
+
+}
+
+.section_content h4 {
+	color: #005487;
+	font-size: 1em;
+	font-family: 'TeXGyreHerosCnRegular';
+	margin:0;
+}
+
+section .share, section .preview, section .more, #real_time .share {
+	color: #658f0b;
+	display: inline-block;
+	margin-right: 25px;
+	text-transform:uppercase;
+}
+
+#real_time .share {
+	color: #658f0b;
+	text-transform:uppercase;
+	display:block;
+	margin:0;
+}
+
+.section_content a {
+	color: #005487;
+}
+
+.section_content time {
+	font-size: .9em;
+}
+
+#side_nav ul {
+	margin:0;
+}
+
+#side_nav li {
+	font-family: 'TeXGyreHerosCnBold';
+	font-weight:100;
+	font-size: 1.2em;
+	margin:0;
+	line-height:100%;
+	height: 60px;
+	width: 160px;
+	padding-left:15px;
+	 /*display:table-cell;
+     vertical-align:middle;*/
+
+}
+
+#side_nav li {
+	display:table;
+
+}
+
+#side_nav a {
+	   display: table-cell;
+    vertical-align: middle;
+
+}
+
+#side_nav li.current {
+	background-image:url(../img/active_arrow.png);
+	background-repeat: no-repeat;
+	background-position: -65px 5px;
+	position:relative;
+}
+
+#side_nav {
+	list-style:none;
+	margin:0;
+	float:left;
+}
+
+li a {
+	color: #000;
+}
+
+li.current a {
+	color:#fff;
+}
+
+#breadcrumbs a {
+	color: #006098;
+	font-size: .74em;
+	font-family: 'TeXGyreHerosCnRegular';
+}
+
+#breadcrumbs a:hover {
+	text-decoration:none;
+}
+
+#breadcrumbs a:after, .green_button:after {
+	content:'►';
+	font-family: Arial, Helvetica, sans-serif;
+	color: #898989;
+}
+
+#breadcrumbs a:last-child:after {
+	content:normal;
+}
+
+#wrapper {
+
+	background-color:#fff;
+	width: 985px;
+	margin: 0 auto;
+	box-shadow: #000 0px 0px 10px;
+	height: 1200px;
+}
+
+#inner {
+	padding: 0 10px 10px;
+}
+
+.green_button {
+	background-color: #658f0b;
+	color:#fff;
+	padding:2px;
+	text-transform: uppercase;
+	font-family: 'TeXGyreHerosCnRegular';
+}
+
+.green_button:after {
+	content:'►';
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+}
+
+.green_button:hover {
+	text-decoration:none;
+}
+
+#real_time {
+	font-size: .8em;
+}
+
+#real_time ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+	margin-top: 2em;
+}
+
+#real_time li {
+	margin-bottom: 1em;
+}
+
+#real_time h2 {
+	line-height:100%;
+	margin-bottom: 1em;
+	font-size: 1.5em;
+	font-family: 'TeXGyreHerosCnBold';
+}
+
+h2.section_heading {
+	font-size: 1.7em;
+	margin-top: .5em;
+	margin-bottom: .7em;
+	font-family: 'TeXGyreHerosCnBold';
+}
+
+.section_content h3, #real_time h3 {
+	font-size: 1em;
+	color:#005487;
+	line-height:100%;
+
+}
+
+h2.section_bold {
+	margin-top: .5em;
+	margin-bottom: .7em;
+	font-family: 'TeXGyreHerosCnBold';
+	font-size: 1.2em;
+    font-weight: 100;
+    line-height: 100%;
+}
+
+#real_time h3 a {
+	color: #005487;
+}
+
+section {
+	margin: 1.2em 0;
+}
+
+#breadcrumbs p, #real_time p {
+	margin-bottom:0;
+}
+
+.preview_box {
+    display:none;
+    border: 1px solid #ccc;
+    padding: 0;
+    box-shadow: 3px 3px 4px 1px #666;
+    height: 300px;
+}
+
+.preview_box_iframe {
+    border: none;
+    overflow: hidden;
+
+    width: 100%;
+    height: 290px;
+
+    /*width: 940px;*/
+    /*zoom: 0.75;*/
+    /*-moz-transform: scale(0.75);*/
+    /*-moz-transform-origin: 0 0;*/
+    /*-o-transform: scale(0.75);*/
+    /*-o-transform-origin: 0 0;*/
+    /*-webkit-transform: scale(0.75);*/
+    /*-webkit-transform-origin: 0 0;*/
+}
+
+.meta_data {
+	display:none;
+	border: 1px solid #ccc;
+	padding: 5px 3px 5px 10px;
+	box-shadow: 3px 3px 4px 1px #666;
+	list-style:none;
+	font-size: .75em;
+    margin: 0 0 10px 0px;
+}
+
+.active {
+	display:block;
+}
+
+#usgsfooterbarbtn {
+	/*background-color: #FFFFFF;
+	background-image: url("../img/BTN_footer_expand.png");
+	background-repeat: no-repeat;
+	*/
+
+	width: 36px;
+	height: 26px;
+	float: right;
+
+	bottom: 0;
+    /* height: 0; */
+    /* left: 0; */
+    position: fixed;
+    text-align: left;
+    /* width: 100%; */
+    z-index: 10000;
+}
+
+#usgsfooterbarbtntoggle {
+	background-color: #666666;
+	background-image: url("../img/BTN_footer_expand.png");
+	background-repeat: no-repeat;
+
+	width: 36px;
+	height: 26px;
+	float: right;
+
+	bottom: 0;
+    /* height: 0; */
+    /* left: 0; */
+    position: fixed;
+    text-align: left;
+    /* width: 100%; */
+    z-index: 10000;
+}
+
+#menu1 li a {
+  outline: 0;
+}
+  
