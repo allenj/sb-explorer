@@ -1,0 +1,37 @@
+<div id="bd">
+  <div class="container">
+    <div class="row">
+      <div class="span10">
+        <img ng-src="img/slides/DataToolsTechnology.png" class="shadowbox"/>
+      </div>
+      <div class="nav nav-stacked nav-pills">
+        <ol>
+          <li>Image option</li>
+          <li>Image option</li>
+          <li>Image option</li>
+          <li>Image option</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2 sticky">
+        <ul class="nav nav-list">
+          <li>Facet1</li>
+          <li>Facet2</li>
+        </ul>
+      </div>
+      <div class="span10">
+        <div class="collection shadowbox" ng-repeat="item in items">
+          <a href="{{collection.id}}"><h4>{{item.title}}</h4></a>
+          <p>{{item.summary}}</p>
+          <span class="badge" ng-click="getDistLinks()">Links...</span>
+          <span class="badge" ng-repeat="distLink in item.distributionLinks">
+              {{distLink.title}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
