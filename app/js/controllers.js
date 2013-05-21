@@ -16,13 +16,16 @@ angular.module('explorer.controllers', [])
             if (half > 1) {
                 $scope.col2 = collections.slice(half, collections.length);
             }
-        })
+        });
 
         $scope.search = function(query) {
             var itemsResult = ItemsResult.query({
                 folderId: '5137a368e4b066106b2eb640',
-                fields: 'id,ancestors'
-            })
+                fields: 'id,ancestors,parentId',
+                q: query
+            }, function() {
+                
+            });
         }
         //$scope.collectionsUrl = "https://www.sciencebase.gov/catalog/items?parentId=5137a368e4b066106b2eb640&format=json&fields=title,summary";
 
