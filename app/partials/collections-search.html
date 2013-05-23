@@ -14,8 +14,8 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid">
-    <div class="row-fluid">
+  <div class="container">
+    <div class="row">
       <div class="span2 sticky">
         <ul class="nav nav-list">
           <li>Facet1</li>
@@ -27,6 +27,8 @@
           <a href="{{collection.id}}"><h4>{{item.title}}</h4></a>
           <p>{{item.summary}}</p>
           <span class="badge" ng-click="getDistLinks()">Links...</span>
+          <span class="badge" ng-click="getDistLinks()">WMS Service</span>
+          <span class="badge" ng-click="getDistLinks()">ArcGIS Service</span>
           <span class="badge" ng-repeat="distLink in item.distributionLinks">
               {{distLink.title}}
           </span>
