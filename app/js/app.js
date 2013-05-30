@@ -5,6 +5,6 @@
 angular.module('explorer', ['explorer.filters', 'explorer.services', 'explorer.directives', 'explorer.controllers']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/collections', {templateUrl: 'partials/collections-list.html', controller: 'CollectionsCtrl'}).
-                   when('/collections/:collectionId', {templateUrl: 'partials/collections-search.html', controller: 'CollectionSearchCtrl'}).
+                   when('/collections/:parentId', {templateUrl: 'partials/collections-search.html', controller: 'SearchCtrl'}).
                    otherwise({redirectTo: '/collections'});
   }]);

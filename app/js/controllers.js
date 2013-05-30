@@ -1,11 +1,14 @@
 'use strict';
 
+
+// var COLLECTIONS_PARENT_ID = "5137a368e4b066106b2eb640";
+var COLLECTIONS_PARENT_ID = "4f3559d2da0661d9ec041a0a";
 /* Controllers */
 
 angular.module('explorer.controllers', [])
     .controller('CollectionsCtrl', [ '$scope', '$http', 'ItemsResult', function ($scope, $http, ItemsResult) {
         var itemsResult = ItemsResult.query({
-            parentId: '5137a368e4b066106b2eb640',
+            parentId: COLLECTIONS_PARENT_ID,
             fields: 'title,summary'
         }, function() {
             var collections = itemsResult.items;
@@ -20,7 +23,7 @@ angular.module('explorer.controllers', [])
 
         $scope.search = function(query) {
             var itemsResult = ItemsResult.query({
-                folderId: '5137a368e4b066106b2eb640',
+                folderId: COLLECTIONS_PARENT_ID,
                 fields: 'id,ancestors,parentId',
                 q: query
             }, function() {
@@ -28,16 +31,27 @@ angular.module('explorer.controllers', [])
             });
         };
     }])
-    .controller('CollectionSearchCtrl', [ '$scope', '$routeParams', 'ItemsResult', 'Item', function ($scope, $routeParams, ItemsResult, Item) {
-        var itemResult = ItemsResult.query({
-            filter: "ancestors=" + $routeParams.collectionId,
-            fields: "title,summary"
-        }, function() {
+    .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'ItemsResult', 'Item', function ($scope, $routeParams, $location, ItemsResult, Item) {
+        //$('.sticky').waypoint('sticky');
+        $scope.parentId = $routeParams.parentId;
+
+        var query = {
+            filter: "ancestors=" + $routeParams.parentId,
+            fields: "title,summary,distributionLinks",
+            facets: "browseCategory,browseType"
+        }
+
+        $.extend(query, $location.search());
+
+        var itemResult = ItemsResult.query(query, function() {
             $scope.items = itemResult.items;
+            $scope.facets = itemResult.facets;
         });
 
 
         $scope.getDistLinks = function() {
             // var item = Item.get({itemId: });
         }
+
+
     }]);
