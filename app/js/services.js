@@ -1,8 +1,8 @@
 'use strict';
 
 /* Services */
-// var HOSTNAME = "https://beta.sciencebase.gov";
-var HOSTNAME = "http://localhost\\:8090";
+var HOSTNAME = "https://beta.sciencebase.gov";
+// var HOSTNAME = "http://localhost\\:8090";
 
 
 // Demonstrate how to register services

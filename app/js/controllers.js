@@ -1,8 +1,8 @@
 'use strict';
 
 
-// var COLLECTIONS_PARENT_ID = "5137a368e4b066106b2eb640";
-var COLLECTIONS_PARENT_ID = "4f3559d2da0661d9ec041a0a";
+var COLLECTIONS_PARENT_ID = "5137a368e4b066106b2eb640";
+// var COLLECTIONS_PARENT_ID = "4f3559d2da0661d9ec041a0a";
 /* Controllers */
 
 angular.module('explorer.controllers', [])
@@ -45,7 +45,7 @@ angular.module('explorer.controllers', [])
 
         var itemResult = ItemsResult.query(query, function() {
             $scope.items = itemResult.items;
-            $scope.facets = itemResult.facets;
+            $scope.facets = itemResult.searchFacets;
         });
 
 

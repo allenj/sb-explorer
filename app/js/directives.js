@@ -8,9 +8,4 @@ angular.module('explorer.directives', [])
         return function(scope, elm, attrs) {
         elm.text(version);
         };
-    }])
-    .directive('bs-affix', [function() {
-        return function (scope, elm, attrs) {
-            $(elm).affix();
-        };
     }]);
