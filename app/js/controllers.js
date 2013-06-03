@@ -32,26 +32,38 @@ angular.module('explorer.controllers', [])
         };
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'ItemsResult', 'Item', function ($scope, $routeParams, $location, ItemsResult, Item) {
-        //$('.sticky').waypoint('sticky');
         $scope.parentId = $routeParams.parentId;
+        $scope.items = [];
+        $scope.facets = [];
 
+        // Load Items
         var query = {
             filter: "ancestors=" + $routeParams.parentId,
             fields: "title,summary,distributionLinks",
-            facets: "browseCategory,browseType"
-        }
-
+            facets: "browseCategory,browseType",
+            offset: 0,
+            max: 20
+        };
         $.extend(query, $location.search());
-
         var itemResult = ItemsResult.query(query, function() {
             $scope.items = itemResult.items;
             $scope.facets = itemResult.searchFacets;
         });
 
 
-        $scope.getDistLinks = function() {
-            // var item = Item.get({itemId: });
-        }
-
+        // Infinite scroll
+        $scope.busy = false;
+        $scope.offset = 0;
+        $scope.nextPage = function() {
+            if ($scope.busy) return;
+            $scope.busy = true;
+            $scope.offset += 20;
+            query.offset = $scope.offset;
+            var scrollResults = ItemsResult.query(query, function() {
+                $scope.items = $scope.items.concat(scrollResults.items);
+                $scope.facets = scrollResults.searchFacets;
+                $scope.busy = false;
+            });
+        };
 
     }]);
