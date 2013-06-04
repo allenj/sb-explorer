@@ -17,7 +17,7 @@
   <div class="container">
     <div class="row">
       <div class="span3">
-        <div id="search-facets" ui-scrollfix="-220">
+        <div id="search-facets" ui-scrollfix="-240">
           <div class="facet" ng-repeat="facet in facets">
             <h5>{{facet.label}}<span class="badge pull-right">{{facet.total}}</span></h5>
             <ul class="nav nav-list">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="span9" infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
-        <div class="collection shadowbox" ng-repeat="item in items">
+        <div class="sb-item shadowbox" ng-repeat="item in items">
           <a href="{{item.link.url}}"><h4>{{item.title}}</h4></a>
           <p>{{item.summary}}</p>
           <a class="label label-info dist-link" ng-repeat="distLink in item.distributionLinks" href="{{distLink.uri}}">

@@ -2,43 +2,42 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('my app', function() {
+describe('SB-Explorer', function() {
 
   beforeEach(function() {
     browser().navigateTo('../../app/index.html');
   });
 
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser().location().url()).toBe("/view1");
+  it('should automatically redirect to /collections when location hash/fragment is empty', function() {
+    expect(browser().location().url()).toBe("/collections");
   });
 
 
-  describe('view1', function() {
+  describe('collections', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view1');
+      browser().navigateTo('#/collections');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
+    it('should render collections-list when user navigates to /collections', function() {
+      expect(repeater('.collection').count()).toBe(20);
+      pause();
     });
 
   });
 
 
-  describe('view2', function() {
+  describe('collections search', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view2');
+      browser().navigateTo('#/collections/4f552e93e4b018de15819c51');
     });
 
 
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+    it('should render collections-search when user navigates to /collections with an id', function() {
+      expect(repeater('.item').count()).toBeGreaterThan(19);
     });
 
   });

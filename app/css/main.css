@@ -190,13 +190,15 @@ textarea {
   padding-top: 10px;
 }
 
-.collection {
+.collection, .sb-item {
   background-color: #fff;
   padding: 5px 10px;
   margin-bottom: 5px;
 }
 
-.collection:hover {
+
+
+.collection:hover, .sb-item:hover {
   background-color: #dcecf7;
 }
 

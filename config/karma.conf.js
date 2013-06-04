@@ -9,7 +9,8 @@ files = [
   'app/lib/angular-ui/ui-utils.js',
   'test/lib/angular/angular-mocks.js',
   'app/js/**/*.js',
-  'test/unit/**/*.js'
+  'test/unit/**/*.js',
+  'test/unit/mock/*.js'
 ];
 
 autoWatch = true;

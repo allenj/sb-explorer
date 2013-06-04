@@ -6,7 +6,7 @@ var COLLECTIONS_PARENT_ID = "5137a368e4b066106b2eb640";
 /* Controllers */
 
 angular.module('explorer.controllers', [])
-    .controller('CollectionsCtrl', [ '$scope', '$http', 'ItemsResult', function ($scope, $http, ItemsResult) {
+    .controller('CollectionsCtrl', [ '$scope', 'ItemsResult', function ($scope, ItemsResult) {
         var itemsResult = ItemsResult.query({
             parentId: COLLECTIONS_PARENT_ID,
             fields: 'title,summary'
