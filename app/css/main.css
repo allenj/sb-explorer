@@ -196,8 +196,6 @@ textarea {
   margin-bottom: 5px;
 }
 
-
-
 .collection:hover, .sb-item:hover {
   background-color: #dcecf7;
 }
@@ -213,12 +211,21 @@ textarea {
   opacity: .25;
 }
 
+#search-facets {
+  width: 220px;
+  top: 50px;
+}
+
 #search-facets li:hover a .icon-plus {
   display: block;
 }
 
 .ui-scrollfix {
   position: fixed;
+}
+
+#search-results {
+  margin-top: 10px;
 }
 
 /* ==========================================================================

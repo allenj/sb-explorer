@@ -10,6 +10,8 @@ angular.module('explorer.filters', [])
     }])
     .filter('facetChars', function() {
         return function(input, nChars, truncateOnWord, facetCount) {
+            input = removeContactId(input);
+
             if (isNaN(nChars)) return input;
             if (nChars <= 0) return '';
 
@@ -66,3 +68,12 @@ angular.module('explorer.filters', [])
             return input;
         };
     });
+
+function removeContactId(input) {
+    if (/^\d+_\D/.test(input)) {
+        return input.substr(input.indexOf('_') + 1);
+    } else if (/^XX+_\D/.test(input)) {
+        return input.substr(input.indexOf('_') + 1);
+    }
+    return input;
+}

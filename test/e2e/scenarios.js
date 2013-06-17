@@ -23,7 +23,6 @@ describe('SB-Explorer', function() {
 
     it('should render collections-list when user navigates to /collections', function() {
       expect(repeater('.collection').count()).toBe(20);
-      pause();
     });
 
   });
@@ -37,7 +36,7 @@ describe('SB-Explorer', function() {
 
 
     it('should render collections-search when user navigates to /collections with an id', function() {
-      expect(repeater('.item').count()).toBeGreaterThan(19);
+      expect(repeater('.sb-item').count()).toBeGreaterThan(19);
     });
 
   });
