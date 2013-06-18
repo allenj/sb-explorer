@@ -65,7 +65,7 @@ angular.module('explorer.controllers', [])
         // Load Items
         var query = {
             filter: "ancestors=" + $routeParams.parentId,
-            fields: "title,summary,distributionLinks",
+            fields: "title,summary,distributionLinks,webLinks",
             facets: "browseCategory,browseType,partyWithName,facets.facetName,tagNameForTypeAndScheme",
             offset: 0,
             max: 20,
@@ -101,6 +101,28 @@ angular.module('explorer.controllers', [])
             };
             $.extend(query, $location.search());
             loadItems(query);
+        }
+
+        $scope.grabBrowseImageUrl = function(item) {
+            //return item.title;
+//            console.log(item);
+//            console.log(item.webLinks);
+            if (item.webLinks){
+                console.log(item);
+                console.log(item.webLinks);
+//                for (var webLink in item.webLinks){
+//                    console.log ("webLink.type: " + webLink.type);
+//                    console.log(webLink);
+//                }
+                for (var i = 0; i < item.webLinks.length; i++) {
+                    var webLink = item.webLinks[i]
+                    console.log ("webLink.type: " + webLink.type);
+                    console.log(webLink);
+                }
+            }
+
+
+            return 'http://libraryphoto.cr.usgs.gov/htmllib/btch355/btch355j/agi00144.gif';
         }
 
     }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 /* Services */
-// var HOSTNAME = "https://beta.sciencebase.gov";
+var HOSTNAME = "https://beta.sciencebase.gov";
 // var HOSTNAME = "http://localhost\\:8090";
 
 angular.module('explorer.services', ['ngResource']).
