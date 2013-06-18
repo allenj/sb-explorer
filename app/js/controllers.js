@@ -33,7 +33,7 @@ angular.module('explorer.controllers', [])
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
         SearchService.setPlaceHolder('Search Data');
-        SearchService.fields = ['title', 'summary', 'distributionLinks'];
+        SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagNameForTypeAndScheme'];
         SearchService.filters = {'ancestors': $routeParams.parentId};
 
@@ -85,15 +85,22 @@ angular.module('explorer.controllers', [])
     //                    console.log ("webLink.type: " + webLink.type);
     //                    console.log(webLink);
     //                }
-                for (var i = 0; i < item.webLinks.length; i++) {
+                var browseImageUrl;
+                var found=false;
+                for (var i = 0; (!found && i < item.webLinks.length); i++) {
                     var webLink = item.webLinks[i]
                     console.log ("webLink.type: " + webLink.type);
                     console.log(webLink);
+                    if (webLink.type && webLink.type == 'browseImage'){
+                        found = true;
+                        browseImageUrl = webLink.uri;
+                        console.log("browseImageUrl:" + browseImageUrl);
+                    }
                 }
+                return browseImageUrl;
             }
 
-
-            return 'http://libraryphoto.cr.usgs.gov/htmllib/btch355/btch355j/agi00144.gif';
+            //return 'http://libraryphoto.cr.usgs.gov/htmllib/btch355/btch355j/agi00144.gif';
         }
 
     }]);
