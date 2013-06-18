@@ -10,18 +10,20 @@
     <div class="row">
       <div class="span3">
         <div id="search-facets" ui-scrollfix="355">
-          <div class="facet" ng-repeat="facet in facets">
+          <h5>Items <span class="badge badge-info pull-right">{{items.length | number}} / {{itemsTotal | number}}</span>
+          <div class="facet" ng-repeat="facet in searchFacets">
             <h5>{{facet.label}}<span class="badge pull-right">{{facet.total}}</span></h5>
             <ul class="nav nav-list">
               <li ng-repeat="entry in facet.entries">
-                <a href="#/collections/{{parentId}}?q={{q}}&filter={{facet.name}}%3D{{entry.term}}" title="{{entry.term|facetChars}}">
+                <a title="{{entry.term|facetChars}}" ng-click="addFilter('{{facet.name}}', '{{entry.term}}')"
+                  <!-- href="#/collections/{{parentId}}?q={{q}}&{{queryParams}}&filter{{filterCount}}={{facet.name}}%3D{{entry.term}}"  -->
                   <i class="icon-plus hide"></i>
                   {{entry.term|facetChars:16:false:entry.count}} ({{entry.count}})
                 </a>
               </li>
               <li ng-show="facet.other > 0 && facet.entries.length > 7">
                 <a href="#/collections/{{parentId}}?facetDetail={{facet.name}}&facetDetailSize=50">
-                  <i class="icon-plus hide"></i>
+                  <i ng-class="{true: 'active', false: 'inactive'}[isActive]"></i>
                   More
                 </a>
               </li>
@@ -35,9 +37,9 @@
           <p>{{item.summary}}</p>
           <a class="label label-info dist-link" ng-repeat="distLink in item.distributionLinks" href="{{distLink.uri}}">
               {{distLink.title}}
-          </span>
+          </as>
         </div>
       </div>
     </div>
-  </div>
+  </div
 </div>
