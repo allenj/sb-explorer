@@ -32,12 +32,22 @@
         </div>
       </div>
       <div class="span9" infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
-        <div class="sb-item shadowbox" ng-repeat="item in items">
-          <a href="{{item.link.url}}"><h4>{{item.title}}</h4></a>
-          <p>{{item.summary}}</p>
-          <a class="label label-info dist-link" ng-repeat="distLink in item.distributionLinks" href="{{distLink.uri}}">
-              {{distLink.title}}
-          </as>
+        <div class="sb-item shadowbox media" ng-repeat="item in items" style="zoom:1;">
+            <a href="{{item.link.url}}"><h4 class="media-heading">{{item.title}}</h4></a>
+            <img class="pull-left" ng-src="{{grabBrowseImageUrl(item)}}" style="max-height: 100px; max-width: 100px;" />
+            <div class="media-body">
+                <!--<a href="{{item.link.url}}"><h4 class="media-heading">{{item.title}}</h4></a>-->
+                <p>{{item.summary}}</p>
+                <a class="label label-info dist-link" ng-repeat="distLink in item.distributionLinks" href="{{distLink.uri}}">
+                    {{distLink.title}}
+                </a>
+
+            </div>
+
+            <!--<span>-->
+                <!--{{grabBrowseImageUrl(item)}}-->
+            <!--</span>-->
+
         </div>
       </div>
     </div>
