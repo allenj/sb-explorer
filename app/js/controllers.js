@@ -48,29 +48,7 @@ angular.module('explorer.controllers', [])
         $scope.filterCount = 0;
         $scope.queryParams = $.param($location.search());
 
-//
-//        $scope.slides = [];
-//        $scope.carouselInterval = -1;// 5000;
-//
-//        $scope.grabBrowseImageUrl = function(item) {
-//            if (item.webLinks){
-//    //                console.log(item);
-//    //                console.log(item.webLinks);
-//                var browseImageUrl;
-//                var found=false;
-//                for (var i = 0; (!found && i < item.webLinks.length); i++) {
-//                    var webLink = item.webLinks[i]
-//    //                    console.log ("webLink.type: " + webLink.type);
-//    //                    console.log(webLink);
-//                    if (webLink.type && webLink.type == 'browseImage'){
-//                        found = true;
-//                        browseImageUrl = webLink.uri;
-//    //                        console.log("browseImageUrl:" + browseImageUrl);
-//                    }
-//                }
-//                return browseImageUrl;
-//            }
-//        }
+        $scope.grabBrowseImageUrl = sbItemUtils.grabBrowseImageUrl;
 
         $scope.$on('new_items', function() {
             $scope.items = $scope.items.concat(SearchService.items);
@@ -79,14 +57,6 @@ angular.module('explorer.controllers', [])
             $scope.busy = false;
             $scope.filterCount = SearchService.filterCount();
 
-//            $.each( SearchService.items, function(index, item) {
-//                console.log(item);
-//                console.log(item.title);
-//                var imageUrl = $scope.grabBrowseImageUrl(item);
-//                if (imageUrl){
-//                    $scope.slides.push({image:imageUrl,title:item.title, text: item.summary})
-//                }
-//            });
         });
 
         $scope.$on('clear_items', function() {
@@ -114,41 +84,47 @@ angular.module('explorer.controllers', [])
 
     }])
     .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
-    $scope.slides = [];
-    $scope.carouselInterval = -1;// 5000;
+        $scope.slides = [];
+        $scope.carouselInterval = -1;// 5000;
+        $scope.grabSlideImageUrl = sbItemUtils.grabBrowseImageUrl;
 
-    $scope.grabBrowseImageUrl = function (item) {
+
+
+        $scope.$on('new_items', function () {
+            $.each(SearchService.items, function (index, item) {
+                var imageUrl = $scope.grabSlideImageUrl(item);
+                if (imageUrl) {
+                    $scope.slides.push({image:imageUrl, title:item.title, text:item.summary})
+                }
+            });
+        });
+}]);
+
+
+
+var sbItemUtils = {
+
+    grabBrowseImageUrl: function(item) {
         if (item.webLinks) {
-            console.log(item);
-            console.log(item.webLinks);
             var browseImageUrl;
             var found = false;
             for (var i = 0; (!found && i < item.webLinks.length); i++) {
                 var webLink = item.webLinks[i]
-                //                    console.log ("webLink.type: " + webLink.type);
-                //                    console.log(webLink);
                 if (webLink.type && webLink.type == 'browseImage') {
                     found = true;
                     browseImageUrl = webLink.uri;
-                    //                        console.log("browseImageUrl:" + browseImageUrl);
                 }
             }
             return browseImageUrl;
         }
+    },
+
+    foo: function() {
+    },
+
+    bar: function() {
     }
-
-    $scope.$on('new_items', function () {
-        $.each(SearchService.items, function (index, item) {
-            console.log(item);
-            console.log(item.title);
-            var imageUrl = $scope.grabBrowseImageUrl(item);
-            if (imageUrl) {
-                $scope.slides.push({image:imageUrl, title:item.title, text:item.summary})
-            }
-        });
-    });
-}]);
-
+};
 
 
 
