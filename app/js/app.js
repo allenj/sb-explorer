@@ -9,7 +9,8 @@ angular.module('explorer',
         'explorer.directives',
         'explorer.controllers',
         'ui.utils',
-        'infinite-scroll'
+        'infinite-scroll',
+        'ui.bootstrap'
     ]
   )
   .config(['$routeProvider', function($routeProvider) {

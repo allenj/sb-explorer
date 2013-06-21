@@ -1,11 +1,32 @@
 <div id="bd">
-  <div class="container">
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="span9 offset2">-->
+        <!--<img ng-src="img/slides/DataToolsTechnology.png" class="shadowbox" style="text-align: center;"/>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <div class="container" ng-controller="SlidesCtrl">
     <div class="row">
-      <div class="span9 offset2">
-        <img ng-src="img/slides/DataToolsTechnology.png" class="shadowbox" style="text-align: center;"/>
+      <div class="span12">
+
+        <carousel interval="carouselInterval">
+          <slide ng-repeat="slide in slides" active="slide.active">
+            <img ng-src="{{slide.image}}" style="margin:auto;">
+            <div class="carousel-caption">
+              <!--<h4>Slide {{$index}}</h4>-->
+              <h4 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{slide.title}}</h4>
+              <p>{{slide.text}}</p>
+            </div>
+          </slide>
+        </carousel>
+
+
       </div>
     </div>
   </div>
+
   <div class="container" id="search-results">
     <div class="row">
       <div class="span3">
@@ -15,7 +36,7 @@
             <h5>{{facet.label}}<span class="badge pull-right">{{facet.total}}</span></h5>
             <ul class="nav nav-list">
               <li ng-repeat="entry in facet.entries">
-                <a title="{{entry.term|facetChars}}" ng-click="addFilter('{{facet.name}}', '{{entry.term}}')"
+                <a title="{{entry.term|facetChars}}" ng-click="addFilter('{{facet.name}}', '{{entry.term}}')" >
                   <!-- href="#/collections/{{parentId}}?q={{q}}&{{queryParams}}&filter{{filterCount}}={{facet.name}}%3D{{entry.term}}"  -->
                   <i class="icon-plus hide"></i>
                   {{entry.term|facetChars:16:false:entry.count}} ({{entry.count}})
@@ -34,7 +55,7 @@
       <div class="span9" infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
         <div class="sb-item shadowbox media" ng-repeat="item in items" style="zoom:1;">
             <a href="{{item.link.url}}"><h4 class="media-heading">{{item.title}}</h4></a>
-            <img class="pull-left" ng-src="{{grabBrowseImageUrl(item)}}" style="max-height: 100px; max-width: 100px;" />
+            <img class="pull-left" ng-src="{{grabBrowseImageUrl(item)}}" style="max-height: 200px; max-width: 100px;" />
             <div class="media-body">
                 <!--<a href="{{item.link.url}}"><h4 class="media-heading">{{item.title}}</h4></a>-->
                 <p>{{item.summary}}</p>
@@ -51,5 +72,5 @@
         </div>
       </div>
     </div>
-  </div
+  </div>
 </div>
