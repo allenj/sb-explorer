@@ -22,8 +22,10 @@ angular.module('explorer.controllers', [])
 
         SearchService.search();
     }])
-    .controller('NavCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
+    .controller('NavCtrl', [ '$scope', '$rootScope', 'SearchService', function ($scope, $rootScope, SearchService) {
         $scope.doSearch = function() {
+            $rootScope.$broadcast('clear_items');
+            SearchService.searchParams['offset'] = 0;
             SearchService.search($scope.q);
         };
 
@@ -54,6 +56,10 @@ angular.module('explorer.controllers', [])
             $scope.filterCount = SearchService.filterCount();
         });
 
+        $scope.$on('clear_items', function() {
+            $scope.items = [];
+        })
+
         SearchService.searchParams = $location.search();
 
         $rootScope.$broadcast('clear_search');
@@ -70,7 +76,6 @@ angular.module('explorer.controllers', [])
 
         $scope.addFilter = function(facet, term) {
             SearchService.filters[facet] = term;
-            SearchService.searchFacets
             SearchService.search();
         };
 
