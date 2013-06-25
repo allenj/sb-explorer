@@ -9,11 +9,45 @@ angular.module('explorer.directives', [])
         elm.text(version);
         };
     }])
-    .directive('facet', ['SearchService', function(SearchService) {
+    .directive('facet', [function() {
         return {
-            restrict: 'E',
-            controller: function($scope, $element, $attrs, $transclude, SearchService) {
-                console.log("facet added?");
+            restrict: 'AE',
+            replace: true,
+            templateUrl: 'template/facet.html',
+            link: function($scope, $element, attrs) {
+                //console.log($scope);
+            }
+        };
+    }])
+    .directive('facetEntry', ['SearchService', function (SearchService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            transclude: true,
+            templateUrl: 'template/facetEntry.html',
+            // scope: {
+                // entryTerm: '=',
+                // entryCount: '='
+            // },
+            link: function($scope, $element, attrs) {
+                $scope.applyFilter = function() {
+                    if ($scope.$parent.facet && $scope.entry.term) {
+                        SearchService.applyFilter($scope.$parent.facet, $scope.entry.term);    
+                    }
+                };
+            }
+        };
+    }])
+    .directive('filter', ['SearchService', function (SearchService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            transclude: true,
+            templateUrl: 'template/filter.html',
+            link: function($scope, $element, attrs) {
+                $scope.removeFilter = function() {
+                    SearchService.removeFilter($scope.filter.key, $scope.filter.val);
+                };
             }
         };
     }]);

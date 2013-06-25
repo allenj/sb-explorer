@@ -37,7 +37,7 @@ angular.module('explorer.controllers', [])
         SearchService.setPlaceHolder('Search Data');
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagNameForTypeAndScheme'];
-        SearchService.filters = {'ancestors': $routeParams.parentId};
+        SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
 
         $scope.parentId = $routeParams.parentId;
         $scope.items = [];
@@ -56,6 +56,7 @@ angular.module('explorer.controllers', [])
             $scope.searchFacets = SearchService.searchFacets;
             $scope.busy = false;
             $scope.filterCount = SearchService.filterCount();
+            $scope.filters = SearchService.filters;
 
         });
 
@@ -76,12 +77,6 @@ angular.module('explorer.controllers', [])
             SearchService.searchParams['offset'] = $scope.offset;
             SearchService.search();
         };
-
-        $scope.addFilter = function(facet, term) {
-            SearchService.filters[facet] = term;
-            SearchService.search();
-        };
-
     }])
     .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = [];
@@ -98,9 +93,7 @@ angular.module('explorer.controllers', [])
                 }
             });
         });
-}]);
-
-
+    }]);
 
 var sbItemUtils = {
 
