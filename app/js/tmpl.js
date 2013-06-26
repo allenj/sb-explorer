@@ -14,7 +14,7 @@ angular.module("template/facetEntry.html", []).run(["$templateCache", function($
 angular.module("template/facet.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/facet.html",
         "<div>" +
-            "<h5>{{facet.label}}<span class=\"badge pull-right\">{{facet.total}}</span></h5>" +
+            "<h5>{{facet.label}}</h5>" +
             "<ul class=\"nav nav-list\">" +
                 "<facet-entry ng-repeat=\"entry in facet.entries\"></facet-entry>" +
                 "<li ng-show=\"facet.other > 0 && facet.entries.length > 7\">" +
@@ -31,9 +31,9 @@ angular.module("template/facet.html", []).run(["$templateCache", function($templ
 angular.module("template/filter.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/filter.html",
         "<li ng-show=\"filter.facetLabel != undefined\">" +
-            "<a ng-click=\"removeFilter()\">" +
-                "<i class=\"icon-minus hide pull-right\"></i>" +
-                "{{filter.facetLabel}}: {{filter.val|facetChars:12}}" +
+            "<a title=\"{{filter.facetLabel}}: {{filter.val}}\" ng-click=\"removeFilter()\">" +
+                "<i class=\"icon-minus pull-right\"></i>" +
+                "{{filter.facetLabel}}: {{filter.val|facetChars:17:false:filter.facetLabel}}" +
             "</a>" +
         "</li>"
     );

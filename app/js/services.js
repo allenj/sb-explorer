@@ -17,7 +17,7 @@ angular.module('explorer.services', ['ngResource']).
     })
     .factory('SearchService', function(ItemsResult, $rootScope) {
         var self = this;
-        self.searchParams = {};
+        self.searchParams = {offset: 0};
         self.facets       = [];
         self.filters      = [];
         self.fields       = [];
@@ -69,12 +69,14 @@ angular.module('explorer.services', ['ngResource']).
 
         self.applyFilter = function(facet, val) {
             $rootScope.$broadcast('clear_items');
+            self.searchParams['offset'] = 0;
             self.filters.push({key: facet.name, val: val, facetLabel: facet.label});
             self.search(self.searchParams['q']);
         };
 
         self.removeFilter = function(key, val) {
             $rootScope.$broadcast('clear_items');
+            self.searchParams['offset'] = 0;
             self.filters = $.grep(self.filters, function(elem) {
                 return (!(elem.key == key && elem.val == val));
             });

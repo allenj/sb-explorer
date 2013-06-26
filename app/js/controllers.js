@@ -44,7 +44,6 @@ angular.module('explorer.controllers', [])
         $scope.itemsTotal = 0;
         $scope.searchFacets = [];
         $scope.busy = false;
-        $scope.offset = 0;
         $scope.filterCount = 0;
         $scope.queryParams = $.param($location.search());
 
@@ -57,14 +56,11 @@ angular.module('explorer.controllers', [])
             $scope.busy = false;
             $scope.filterCount = SearchService.filterCount();
             $scope.filters = SearchService.filters;
-
         });
 
         $scope.$on('clear_items', function() {
             $scope.items = [];
-        })
-
-        SearchService.searchParams = $location.search();
+        });
 
         $rootScope.$broadcast('clear_search');
         SearchService.search();
@@ -73,8 +69,7 @@ angular.module('explorer.controllers', [])
         $scope.nextPage = function() {
             if ($scope.busy) return;
             $scope.busy = true;
-            $scope.offset += 20;
-            SearchService.searchParams['offset'] = $scope.offset;
+            SearchService.searchParams['offset'] += 20;
             SearchService.search();
         };
     }])
