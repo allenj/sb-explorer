@@ -35,7 +35,7 @@ angular.module('explorer.controllers', [])
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
         SearchService.setPlaceHolder('Search Data');
-        SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks'];
+        SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagNameForTypeAndScheme'];
         SearchService.filters = {'ancestors': $routeParams.parentId};
 
@@ -86,7 +86,7 @@ angular.module('explorer.controllers', [])
     .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = [];
         $scope.carouselInterval = -1;// 5000;
-        $scope.grabSlideImageUrl = sbItemUtils.grabBrowseImageUrl;
+        $scope.grabSlideImageUrl = sbItemUtils.grabPreviewImageUrl;
 
 
 
@@ -105,26 +105,63 @@ angular.module('explorer.controllers', [])
 var sbItemUtils = {
 
     grabBrowseImageUrl: function(item) {
-        if (item.webLinks) {
-            var browseImageUrl;
+        console.log("grabBrowseImageUrl");
+        var browseImageUrl;
+        console.log (item.previewImage);
+        if (item.previewImage){
+            if (item.previewImage.small && item.previewImage.small.url){
+                browseImageUrl = item.previewImage.small.url;
+            }
+        }
+        else if (item.webLinks) {
+
             var found = false;
             for (var i = 0; (!found && i < item.webLinks.length); i++) {
                 var webLink = item.webLinks[i]
                 if (webLink.type && webLink.type == 'browseImage') {
                     found = true;
-                    browseImageUrl = webLink.uri;
+                    console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
+                    if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
+                        browseImageUrl = webLink.uri;
+                    }
+
                 }
             }
-            return browseImageUrl;
         }
+        return browseImageUrl;
     },
 
-    foo: function() {
-    },
+    grabPreviewImageUrl: function(item) {
+        console.log("grabPreviewImageUrl");
+        var browseImageUrl;
+        console.log (item.previewImage);
+        if (item.previewImage){
+            if (item.previewImage.small && item.previewImage.medium.url){
+                browseImageUrl = item.previewImage.medium.url;
+            }
+        }
+        else if (item.webLinks) {
 
-    bar: function() {
+            var found = false;
+            for (var i = 0; (!found && i < item.webLinks.length); i++) {
+                var webLink = item.webLinks[i]
+                if (webLink.type && webLink.type == 'browseImage') {
+                    found = true;
+                    console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
+                    if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
+                        browseImageUrl = webLink.uri;
+                    }
+
+                }
+            }
+        }
+        return browseImageUrl;
     }
+
 };
 
 
 
+var browseImageBlackList =
+    ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
+    'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
