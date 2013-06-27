@@ -75,7 +75,7 @@ angular.module('explorer.controllers', [])
     }])
     .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = [];
-        $scope.carouselInterval = -1;// 5000;
+        $scope.carouselInterval = 5000; //-1
         $scope.grabSlideImageUrl = sbItemUtils.grabPreviewImageUrl;
 
 
@@ -88,6 +88,10 @@ angular.module('explorer.controllers', [])
                 }
             });
         });
+    }])
+    .controller('DummySlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
+        $scope.slides = dummySlides;
+        $scope.carouselInterval = 5000;
     }]);
 
 var sbItemUtils = {
@@ -154,7 +158,7 @@ var browseImageBlackList =
     ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
     'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
 
-var defaultSlides = [
+var dummySlides = [
     {image:"img/slides/ClimateChange.png", title:"", text:""},
     {image:"img/slides/DataToolsTechnology.png", title:"", text:""},
     {image:"img/slides/EarthCharacteristics.png", title:"", text:""},

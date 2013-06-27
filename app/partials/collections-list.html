@@ -1,45 +1,29 @@
+<style type="text/css">
+  .carousel-caption {
+    background: rgba(0, 0, 0, 0.4);
+  }
+</style>
+
+
 <div id="bd">
   <div id="carousel-container" class="fadeToWhite">
-      <div id="myCarousel" class="carousel slide shadowbox">
-      <!-- <ol class="carousel-indicators">
-        <li data-target="#myCarousel" ng-repeat="slide in slides"
-          ng-class="{active : $first, data-slide-to: $index}" data-slide-to="{$index}"></li>
-      </ol> -->
-    <!-- Carousel items -->
-      <div class="carousel-inner">
-        <div class="active item">
-          <img src="img/slides/AtmosphereClimate.png"/>
-          <div class="collection-menu">
+    <div id="myCarousel" class="carousel slide shadowbox" ng-controller="DummySlidesCtrl">
+
+
+        <carousel interval="carouselInterval">
+          <slide ng-repeat="slide in slides" active="slide.active">
+            <img ng-src="{{slide.image}}" style="margin:auto;">
             <div class="carousel-caption">
-              <h4>Item title of nice looking item</h4>
-              <p class="hide-stuck">Collection it belongs in</p>
+              <!--<h4>Slide {{$index}}</h4>-->
+              <h4 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{slide.title}}</h4>
+              <p>{{slide.text}}</p>
             </div>
-          </div>
-        </div>
-        <div class="item"><img src="img/slides/ClimateChange.png"/></div>
-        <div class="item"><img src="img/slides/DataToolsTechnology.png"/></div>
-        <div class="item"><img src="img/slides/EarthCharacteristics.png"/></div>
-        <div class="item"><img src="img/slides/EcologyEnvironment.png"/></div>
-        <div class="item"><img src="img/slides/EnergyMinerals.png"/></div>
-        <div class="item"><img src="img/slides/EnvironmentalIssues.png"/></div>
-        <div class="item"><img src="img/slides/GeographicAnalysisMapping.png"/></div>
-        <div class="item"><img src="img/slides/GeologicalProcesses.png"/></div>
-        <div class="item"><img src="img/slides/HydrologicalProcesses.png"/></div>
-        <div class="item"><img src="img/slides/MappingRemoteSensingGeospatialData.png"/></div>
-        <div class="item"><img src="img/slides/NaturalHazards.png"/></div>
-        <div class="item"><img src="img/slides/OceansCoastlines.png"/></div>
-        <div class="item"><img src="img/slides/PlanetaryScience.png"/></div>
-        <div class="item"><img src="img/slides/Planets.png"/></div>
-        <div class="item"><img src="img/slides/PlantsAnimals.png"/></div>
-        <div class="item"><img src="img/slides/TechniquesMethods.png"/></div>
-        <div class="item"><img src="img/slides/Water.png"/></div>
-        <div class="item"><img src="img/slides/WaterResources.png"/></div>
-      </div>
-      <!-- Carousel nav -->
-      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+          </slide>
+        </carousel>
+
     </div>
   </div>
+
   <div id="collections">
     <div class="container">
       <div class="row">
