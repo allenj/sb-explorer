@@ -1,0 +1,27 @@
+{
+  "name": "explorer",
+  "version": "0.0.0",
+  "description": "Front-end data explorer for ScienceBase Information",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allenj/sb-explorer.git"
+  },
+  "keywords": [
+    "ScienceBase",
+    "USGS"
+  ],
+  "author": "allenj",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "3aa01eae9b68fbf7ae92256c781eb305baf19f29",
+  "dependencies": {
+    "grunt": "~0.4.1"
+  }
+}

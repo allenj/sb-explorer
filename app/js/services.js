@@ -17,14 +17,13 @@ angular.module('explorer.services', ['ngResource']).
     })
     .factory('SearchService', function(ItemsResult, $rootScope) {
         var self = this;
-        self.searchParams = {};
+        self.searchParams = {offset: 0};
         self.facets       = [];
-        self.filters      = {};
+        self.filters      = [];
         self.fields       = [];
         self.items        = [];
         self.itemsTotal   = 0;
         self.searchFacets = [];
-        self._filterCount = 0;
         self.placeHolder  = "";
 
         self.search = function(searchString) {
@@ -45,8 +44,8 @@ angular.module('explorer.services', ['ngResource']).
             });
 
             var fc = self.filterCount();
-            $.each(queryObject.filters, function(key, val) {
-                result['filter' + fc] = key+"="+val;
+            $.each(queryObject.filters, function(idx, filter) {
+                result['filter' + fc] = filter.key+"="+filter.val;
                 fc++;
             });
 
@@ -66,7 +65,43 @@ angular.module('explorer.services', ['ngResource']).
 
         self.setPlaceHolder = function(s) {
             $rootScope.placeHolder = s;
+        };
+
+        self.applyFilter = function(facet, val) {
+            $rootScope.$broadcast('clear_items');
+            self.searchParams['offset'] = 0;
+            self.filters.push({key: facet.name, val: val, facetLabel: facet.label});
+            self.search(self.searchParams['q']);
+        };
+
+        self.removeFilter = function(key, val) {
+            $rootScope.$broadcast('clear_items');
+            self.searchParams['offset'] = 0;
+            self.filters = $.grep(self.filters, function(elem) {
+                return (!(elem.key == key && elem.val == val));
+            });
+            self.search(self.searchParams['q']);
         }
+
+        return self;
+    })
+    .factory('ItemUtilService', function() {
+        var self = this;
+
+        self.grabBrowseImageUrl = function(item) {
+            if (item.webLinks) {
+                var browseImageUrl;
+                var found = false;
+                for (var i = 0; (!found && i < item.webLinks.length); i++) {
+                    var webLink = item.webLinks[i]
+                    if (webLink.type && webLink.type == 'browseImage') {
+                        found = true;
+                        browseImageUrl = webLink.uri;
+                    }
+                }
+                return browseImageUrl;
+            }
+        };
 
         return self;
     })
