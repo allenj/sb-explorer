@@ -165,3 +165,25 @@ var sbItemUtils = {
 var browseImageBlackList =
     ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
     'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
+
+var defaultSlides = [
+    {image:"img/slides/ClimateChange.png", title:"", text:""},
+    {image:"img/slides/DataToolsTechnology.png", title:"", text:""},
+    {image:"img/slides/EarthCharacteristics.png", title:"", text:""},
+    {image:"img/slides/EcologyEnvironment.png", title:"", text:""},
+    {image:"img/slides/EnergyMinerals.png", title:"", text:""},
+    {image:"img/slides/EnvironmentalIssues.png", title:"", text:""},
+    {image:"img/slides/GeographicAnalysisMapping.png", title:"", text:""},
+    {image:"img/slides/GeologicalProcesses.png", title:"", text:""},
+    {image:"img/slides/HydrologicalProcesses.png", title:"", text:""},
+    {image:"img/slides/MappingRemoteSensingGeospatialData.png", title:"", text:""},
+    {image:"img/slides/NaturalHazards.png", title:"", text:""},
+    {image:"img/slides/OceansCoastlines.png", title:"", text:""},
+    {image:"img/slides/PlanetaryScience.png", title:"", text:""},
+    {image:"img/slides/Planets.png", title:"", text:""},
+    {image:"img/slides/PlantsAnimals.png", title:"", text:""},
+    {image:"img/slides/TechniquesMethods.png", title:"", text:""},
+    {image:"img/slides/Water.png", title:"", text:""},
+    {image:"img/slides/WaterResources.png", title:"", text:""}
+];
+
