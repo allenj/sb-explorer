@@ -101,8 +101,8 @@ var sbItemUtils = {
         var browseImageUrl;
         console.log (item.previewImage);
         if (item.previewImage){
-            if (item.previewImage.small && item.previewImage.small.url){
-                browseImageUrl = item.previewImage.small.url;
+            if (item.previewImage.small && item.previewImage.small.uri){
+                browseImageUrl = item.previewImage.small.uri;
             }
         }
         else if (item.webLinks) {
@@ -128,8 +128,8 @@ var sbItemUtils = {
         var browseImageUrl;
         console.log (item.previewImage);
         if (item.previewImage){
-            if (item.previewImage.small && item.previewImage.medium.url){
-                browseImageUrl = item.previewImage.medium.url;
+            if (item.previewImage.small && item.previewImage.medium.uri){
+                browseImageUrl = item.previewImage.medium.uri;
             }
         }
         else if (item.webLinks) {
