@@ -9,6 +9,8 @@ angular.module('explorer.controllers', [])
     .controller('CollectionsCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         SearchService.setPlaceHolder('Search Data Collections');
         SearchService.searchParams['parentId'] = COLLECTIONS_PARENT_ID;
+        SearchService.searchParams['offset'] = 0;
+        SearchService.filters = []; 
         SearchService.fields = ['title', 'summary'];
 
         $scope.$on('new_items', function() {
