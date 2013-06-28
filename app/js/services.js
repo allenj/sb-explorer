@@ -17,7 +17,7 @@ angular.module('explorer.services', ['ngResource']).
     })
     .factory('SearchService', function(ItemsResult, $rootScope) {
         var self = this;
-        self.searchParams = {offset: 0};
+        self.searchParams = {};
         self.facets       = [];
         self.filters      = [];
         self.fields       = [];

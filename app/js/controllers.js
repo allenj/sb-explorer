@@ -38,8 +38,9 @@ angular.module('explorer.controllers', [])
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagNameForTypeAndScheme'];
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
+        SearchService.searchParams = {offset: 0};
 
-        $scope.parentId = $routeParams.parentId;
+        // $scope.parentId = $routeParams.parentId;
         $scope.items = [];
         $scope.itemsTotal = 0;
         $scope.searchFacets = [];
@@ -93,9 +94,7 @@ angular.module('explorer.controllers', [])
 var sbItemUtils = {
 
     grabBrowseImageUrl: function(item) {
-        console.log("grabBrowseImageUrl");
         var browseImageUrl;
-        console.log (item.previewImage);
         if (item.previewImage){
             if (item.previewImage.small && item.previewImage.small.url){
                 browseImageUrl = item.previewImage.small.url;
