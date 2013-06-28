@@ -9,6 +9,8 @@ angular.module('explorer.controllers', [])
     .controller('CollectionsCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         SearchService.setPlaceHolder('Search Data Collections');
         SearchService.searchParams['parentId'] = COLLECTIONS_PARENT_ID;
+        SearchService.searchParams['offset'] = 0;
+        SearchService.filters = []; 
         SearchService.fields = ['title', 'summary'];
 
         $scope.$on('new_items', function() {
@@ -38,8 +40,9 @@ angular.module('explorer.controllers', [])
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagNameForTypeAndScheme'];
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
+        SearchService.searchParams = {offset: 0};
 
-        $scope.parentId = $routeParams.parentId;
+        // $scope.parentId = $routeParams.parentId;
         $scope.items = [];
         $scope.itemsTotal = 0;
         $scope.searchFacets = [];
@@ -97,9 +100,7 @@ angular.module('explorer.controllers', [])
 var sbItemUtils = {
 
     grabBrowseImageUrl: function(item) {
-        console.log("grabBrowseImageUrl");
         var browseImageUrl;
-        console.log (item.previewImage);
         if (item.previewImage){
             if (item.previewImage.small && item.previewImage.small.uri){
                 browseImageUrl = item.previewImage.small.uri;
