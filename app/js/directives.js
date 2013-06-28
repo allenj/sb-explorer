@@ -50,4 +50,38 @@ angular.module('explorer.directives', [])
                 };
             }
         };
+    }])
+    .directive('item', ['ImageUtilService', function (ImageUtilService) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            transclude: true,
+            templateUrl: 'template/item.html',
+            link: function($scope, $element, attrs) {
+                $scope.grabBrowseImage = function() {
+                    var browseImageUrl;
+                    if ($scope.item.previewImage){
+                        if ($scope.item.previewImage.small && $scope.item.previewImage.small.uri){
+                            browseImageUrl = $scope.item.previewImage.small.uri;
+                        }
+                    }
+                    else if ($scope.item.webLinks) {
+
+                        var found = false;
+                        for (var i = 0; (!found && i < $scope.item.webLinks.length); i++) {
+                            var webLink = $scope.item.webLinks[i]
+                            if (webLink.type && webLink.type == 'browseImage') {
+                                found = true;
+                                console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, ImageUtilService.browseImageBlackList)) );
+                                if (jQuery.inArray(webLink.uri, ImageUtilService.browseImageBlackList) == -1){
+                                    browseImageUrl = webLink.uri;
+                                }
+
+                            }
+                        }
+                    }
+                    return browseImageUrl;
+                }
+            }
+        }
     }]);

@@ -42,15 +42,12 @@ angular.module('explorer.controllers', [])
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
         SearchService.searchParams = {offset: 0};
 
-        // $scope.parentId = $routeParams.parentId;
         $scope.items = [];
         $scope.itemsTotal = 0;
         $scope.searchFacets = [];
         $scope.busy = false;
         $scope.filterCount = 0;
         $scope.queryParams = $.param($location.search());
-
-        $scope.grabBrowseImageUrl = sbItemUtils.grabBrowseImageUrl;
 
         $scope.$on('new_items', function() {
             $scope.items = $scope.items.concat(SearchService.items);
@@ -81,8 +78,6 @@ angular.module('explorer.controllers', [])
         $scope.carouselInterval = 5000; //-1
         $scope.grabSlideImageUrl = sbItemUtils.grabPreviewImageUrl;
 
-
-
         $scope.$on('new_items', function () {
             $.each(SearchService.items, function (index, item) {
                 var imageUrl = $scope.grabSlideImageUrl(item);
@@ -97,35 +92,10 @@ angular.module('explorer.controllers', [])
         $scope.carouselInterval = 5000;
     }]);
 
+var grabPreviewImageUrlCount = 0;
 var sbItemUtils = {
-
-    grabBrowseImageUrl: function(item) {
-        var browseImageUrl;
-        if (item.previewImage){
-            if (item.previewImage.small && item.previewImage.small.uri){
-                browseImageUrl = item.previewImage.small.uri;
-            }
-        }
-        else if (item.webLinks) {
-
-            var found = false;
-            for (var i = 0; (!found && i < item.webLinks.length); i++) {
-                var webLink = item.webLinks[i]
-                if (webLink.type && webLink.type == 'browseImage') {
-                    found = true;
-                    console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
-                    if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
-                        browseImageUrl = webLink.uri;
-                    }
-
-                }
-            }
-        }
-        return browseImageUrl;
-    },
-
     grabPreviewImageUrl: function(item) {
-        console.log("grabPreviewImageUrl");
+        console.log("grabPreviewImageUrl:" + ++grabPreviewImageUrlCount + ", item.id:" + item.id);
         var browseImageUrl;
         console.log (item.previewImage);
         if (item.previewImage){
@@ -150,14 +120,7 @@ var sbItemUtils = {
         }
         return browseImageUrl;
     }
-
 };
-
-
-
-var browseImageBlackList =
-    ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
-    'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
 
 var dummySlides = [
     {image:"img/slides/ClimateChange.png", title:"", text:""},

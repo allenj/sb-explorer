@@ -1,16 +1,9 @@
 <style type="text/css">
-    /*div.carousel-inner {*/
-    /*height: 400px;*/
-    /*}*/
-
-
-    /*div.carousel-inner div.item {*/
   .carousel-inner > .item {
     background: #000000;
     height: 400px;
   }
 
-    /*div.carousel-inner div.item img {*/
   .carousel-inner > .item > img {
     max-height: 400px;
     vertical-align: middle;
@@ -32,7 +25,6 @@
   <div class="container" ng-controller="SlidesCtrl">
     <div class="row">
       <div class="span12">
-
         <carousel interval="carouselInterval">
           <slide ng-repeat="slide in slides" active="slide.active">
             <img ng-src="{{slide.image}}" style="margin:auto;">
@@ -43,8 +35,6 @@
             </div>
           </slide>
         </carousel>
-
-
       </div>
     </div>
   </div>
@@ -52,7 +42,7 @@
   <div class="container" id="search-results">
     <div class="row">
       <div class="span3">
-        <div id="search-facets">
+        <div id="search-facets" ui-scrollfix="355">
           <h5>Items <span class="badge badge-info pull-right">{{items.length | number}} / {{itemsTotal | number}}</span></h5>
           <div>
             <h5>Applied Filters</h5>
@@ -64,16 +54,7 @@
         </div>
       </div>
       <div class="span9" infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
-        <div class="sb-item shadowbox media" ng-repeat="item in items" style="zoom:1;">
-            <a href="{{item.link.url}}"><h4 class="media-heading">{{item.title}}</h4></a>
-            <img class="pull-left" ng-src="{{grabBrowseImageUrl(item)}}" style="max-height: 100px; max-width: 100px;" />
-            <div class="media-body">
-                <p>{{item.summary}}</p>
-                <a class="label label-info dist-link" ng-repeat="distLink in item.distributionLinks" href="{{distLink.uri}}">
-                    {{distLink.title}}
-                </a>
-            </div>
-        </div>
+        <item ng-repeat="item in items"></item>
       </div>
     </div>
   </div>
