@@ -58,8 +58,11 @@ angular.module('explorer.directives', [])
             transclude: true,
             templateUrl: 'template/item.html',
             link: function($scope, $element, attrs) {
+                console.log($scope.item.id, $scope.item.$$hashKey);
+
                 $scope.grabBrowseImage = function() {
                     var browseImageUrl;
+                    console.log("grabBrowseImage", $scope.item.id, $scope.item.$$hashKey);
                     if ($scope.item.previewImage){
                         if ($scope.item.previewImage.small && $scope.item.previewImage.small.uri){
                             browseImageUrl = $scope.item.previewImage.small.uri;
@@ -82,6 +85,8 @@ angular.module('explorer.directives', [])
                     }
                     return browseImageUrl;
                 }
+
+                $scope.item.browseImage = $scope.item.browseImage != undefined ? $scope.item.browseImage : $scope.grabBrowseImage(); 
             }
         }
     }]);

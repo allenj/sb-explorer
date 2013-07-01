@@ -43,7 +43,7 @@ angular.module("template/item.html", []).run(["$templateCache", function($templa
     $templateCache.put("template/item.html",
         "<div class=\"sb-item shadowbox media\" style=\"zoom:1;\">" +
             "<a href=\"{{item.link.url}}\"><h4 class=\"media-heading\">{{item.title}}</h4></a>" +
-            "<img class=\"pull-left\" ng-src=\"{{grabBrowseImage()}}\" style=\"max-height: 100px; max-width: 100px;\" />" +
+            "<img class=\"pull-left\" ng-src=\"{{item.browseImage}}\" style=\"max-height: 100px; max-width: 100px;\" />" +
             "<div class=\"media-body\">" +
                 "<p>{{item.summary}}</p>" +
                 "<a class=\"label label-info dist-link\" ng-repeat=\"distLink in item.distributionLinks\" href=\"{{distLink.uri}}\">" +
