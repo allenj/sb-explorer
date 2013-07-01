@@ -42,7 +42,6 @@ angular.module('explorer.controllers', [])
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
         SearchService.searchParams = {offset: 0};
 
-        // $scope.parentId = $routeParams.parentId;
         $scope.items = [];
         $scope.itemsTotal = 0;
         $scope.searchFacets = [];
@@ -50,7 +49,7 @@ angular.module('explorer.controllers', [])
         $scope.filterCount = 0;
         $scope.queryParams = $.param($location.search());
 
-        $scope.grabBrowseImageUri = sbItemUtils.grabBrowseImageUri;
+        $scope.grabBrowseImageUrl = sbItemUtils.grabBrowseImageUrl;
 
         $scope.$on('new_items', function() {
             $scope.items = $scope.items.concat(SearchService.items);
@@ -80,8 +79,6 @@ angular.module('explorer.controllers', [])
         $scope.slides = [];
         $scope.carouselInterval = 5000; //-1
         $scope.grabSlideImageUri = sbItemUtils.grabPreviewImageUri;
-
-
 
         $scope.$on('new_items', function () {
             $.each(SearchService.items, function (index, item) {
@@ -166,7 +163,6 @@ var sbItemUtils = {
 
         return browseImageUri;
     }
-
 };
 
 

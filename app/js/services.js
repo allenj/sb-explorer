@@ -85,23 +85,11 @@ angular.module('explorer.services', ['ngResource']).
 
         return self;
     })
-    .factory('ItemUtilService', function() {
+    .factory('ImageUtilService', function() {
         var self = this;
 
-        self.grabBrowseImageUrl = function(item) {
-            if (item.webLinks) {
-                var browseImageUrl;
-                var found = false;
-                for (var i = 0; (!found && i < item.webLinks.length); i++) {
-                    var webLink = item.webLinks[i]
-                    if (webLink.type && webLink.type == 'browseImage') {
-                        found = true;
-                        browseImageUrl = webLink.uri;
-                    }
-                }
-                return browseImageUrl;
-            }
-        };
+        self.browseImageBlackList = ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
+            'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg'];
 
         return self;
     })

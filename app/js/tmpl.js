@@ -1,4 +1,4 @@
-angular.module("explorer.tmpls", ["template/facetEntry.html", "template/facet.html", "template/filter.html"]);
+angular.module("explorer.tmpls", ["template/facetEntry.html", "template/facet.html", "template/filter.html", "template/item.html"]);
 
 angular.module("template/facetEntry.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/facetEntry.html",
@@ -38,3 +38,19 @@ angular.module("template/filter.html", []).run(["$templateCache", function($temp
         "</li>"
     );
 }]);
+
+angular.module("template/item.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("template/item.html",
+        "<div class=\"sb-item shadowbox media\" style=\"zoom:1;\">" +
+            "<a href=\"{{item.link.url}}\"><h4 class=\"media-heading\">{{item.title}}</h4></a>" +
+            "<img class=\"pull-left\" ng-src=\"{{item.browseImage}}\" style=\"max-height: 100px; max-width: 100px;\" />" +
+            "<div class=\"media-body\">" +
+                "<p>{{item.summary}}</p>" +
+                "<a class=\"label label-info dist-link\" ng-repeat=\"distLink in item.distributionLinks\" href=\"{{distLink.uri}}\">" +
+                    "{{distLink.title}}" +
+                "</a>" +
+            "</div>" +
+        "</div>"
+    );
+}]);
+

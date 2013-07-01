@@ -67,18 +67,8 @@
           <facet ng-repeat="facet in searchFacets"></facet>
         </div>
       </div>
-      <div class="span9" ZZZinfinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
-        <div class="sb-item shadowbox media" ng-repeat="item in items" style="zoom:1;">
-            <a href="{{item.link.url}}"><h4 class="media-heading">{{item.title}}</h4></a>
-            <img class="pull-left" ng-src="{{item.previewImage.thumbnail.uri}}" style="max-height: 150px; max-width: 100px;" />
-            <!--<img class="pull-left" ng-src="{{grabBrowseImageUri(item)}}" style="max-height: 150px; max-width: 100px;" />-->
-            <div class="media-body">
-                <p>{{item.summary}}</p>
-                <a class="label label-info dist-link" ng-repeat="distLink in item.distributionLinks" href="{{distLink.uri}}">
-                    {{distLink.title}}
-                </a>
-            </div>
-        </div>
+      <div class="span9" infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
+        <item ng-repeat="item in items"></item>
       </div>
     </div>
   </div>
