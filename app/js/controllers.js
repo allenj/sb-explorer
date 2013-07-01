@@ -73,14 +73,13 @@ angular.module('explorer.controllers', [])
             SearchService.search();
         };
     }])
-    .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
+    .controller('SlidesCtrl', [ '$scope', 'SearchService', 'ImageUtilService', function ($scope, SearchService, ImageUtilService) {
         $scope.slides = [];
         $scope.carouselInterval = 5000; //-1
-        $scope.grabSlideImageUri = sbItemUtils.grabGalleryImageUri;
 
         $scope.$on('new_items', function () {
             $.each(SearchService.items, function (index, item) {
-                var ImageUri = $scope.grabSlideImageUri(item);
+                var ImageUri = ImageUtilService.grabGalleryImageUri(item);
                 if (ImageUri) {
                     $scope.slides.push({image:ImageUri, title:item.title, text:item.summary, itemLink: item.link.url})
                 }
@@ -92,45 +91,6 @@ angular.module('explorer.controllers', [])
         $scope.carouselInterval = 5000;
     }]);
 
-
-var sbItemUtils = {
-
-    grabGalleryImageUri: function(item) {
-        var galleryImageUri;
-        //console.log (item.previewImage);
-        if (item.previewImage){
-            if (item.previewImage.medium && item.previewImage.medium.uri){
-                galleryImageUri = item.previewImage.medium.uri;
-            }
-            else if (item.previewImage.small && item.previewImage.small.uri){
-                galleryImageUri = item.previewImage.small.uri;
-            }
-        }
-        else if (item.webLinks) {
-            var found = false;
-            for (var i = 0; (!found && i < item.webLinks.length); i++) {
-                var webLink = item.webLinks[i]
-                if (webLink.type && webLink.type == 'browseImage') {
-                    found = true;
-                    if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
-                        galleryImageUri = webLink.uri;
-                    }
-                }
-            }
-        }
-
-        if (jQuery.inArray(galleryImageUri, galleryImageBlackList) >= 0){
-            galleryImageUri = null;
-        }
-
-        return galleryImageUri;
-    }
-};
-
-
-var galleryImageBlackList =
-    ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
-        'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
 
 var dummySlides = [
     {image:"img/slides/ClimateChange.png", title:"", text:""},

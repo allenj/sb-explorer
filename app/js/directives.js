@@ -74,8 +74,7 @@ angular.module('explorer.directives', [])
                             var webLink = $scope.item.webLinks[i]
                             if (webLink.type && webLink.type == 'browseImage') {
                                 found = true;
-                                console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, ImageUtilService.browseImageBlackList)) );
-                                if (jQuery.inArray(webLink.uri, ImageUtilService.browseImageBlackList) == -1){
+                                if (jQuery.inArray(webLink.uri, ImageUtilService.galleryImageBlackList) == -1){
                                     browseImageUri = webLink.uri;
                                 }
                             }

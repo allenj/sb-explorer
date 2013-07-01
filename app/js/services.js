@@ -88,8 +88,40 @@ angular.module('explorer.services', ['ngResource']).
     .factory('ImageUtilService', function() {
         var self = this;
 
-        self.browseImageBlackList = ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
+        self.galleryImageBlackList = [
+            'http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
             'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg'];
+
+        self.grabGalleryImageUri = function(item) {
+            var galleryImageUri;
+            if (item.previewImage){
+                if (item.previewImage.medium && item.previewImage.medium.uri){
+                    galleryImageUri = item.previewImage.medium.uri;
+                }
+                else if (item.previewImage.small && item.previewImage.small.uri){
+                    galleryImageUri = item.previewImage.small.uri;
+                }
+            }
+            else if (item.webLinks) {
+                var found = false;
+                for (var i = 0; (!found && i < item.webLinks.length); i++) {
+                    var webLink = item.webLinks[i]
+                    if (webLink.type && webLink.type == 'browseImage') {
+                        found = true;
+                        if (jQuery.inArray(webLink.uri, self.galleryImageBlackList) == -1){
+                            galleryImageUri = webLink.uri;
+                        }
+                    }
+                }
+            }
+
+            if (jQuery.inArray(galleryImageUri, self.galleryImageBlackList) >= 0){
+                galleryImageUri = null;
+            }
+
+            return galleryImageUri;
+        }
+
 
         return self;
     })
