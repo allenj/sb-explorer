@@ -50,7 +50,7 @@ angular.module('explorer.controllers', [])
         $scope.filterCount = 0;
         $scope.queryParams = $.param($location.search());
 
-        $scope.grabBrowseImageUrl = sbItemUtils.grabBrowseImageUrl;
+        $scope.grabBrowseImageUri = sbItemUtils.grabBrowseImageUri;
 
         $scope.$on('new_items', function() {
             $scope.items = $scope.items.concat(SearchService.items);
@@ -79,15 +79,15 @@ angular.module('explorer.controllers', [])
     .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = [];
         $scope.carouselInterval = 5000; //-1
-        $scope.grabSlideImageUrl = sbItemUtils.grabPreviewImageUrl;
+        $scope.grabSlideImageUri = sbItemUtils.grabPreviewImageUri;
 
 
 
         $scope.$on('new_items', function () {
             $.each(SearchService.items, function (index, item) {
-                var imageUrl = $scope.grabSlideImageUrl(item);
-                if (imageUrl) {
-                    $scope.slides.push({image:imageUrl, title:item.title, text:item.summary})
+                var ImageUri = $scope.grabSlideImageUri(item);
+                if (ImageUri) {
+                    $scope.slides.push({image:ImageUri, title:item.title, text:item.summary, itemLink: item.link.url})
                 }
             });
         });
@@ -97,13 +97,24 @@ angular.module('explorer.controllers', [])
         $scope.carouselInterval = 5000;
     }]);
 
+
+var grabBrowseImageUriCount = 0;
+var grabBrowseImageUriIds = [];
+var grabPreviewImageUriCount = 0;
 var sbItemUtils = {
 
-    grabBrowseImageUrl: function(item) {
-        var browseImageUrl;
+    grabBrowseImageUri: function(item) {
+        if (jQuery.inArray(item.id, grabBrowseImageUriIds) > -1) {
+            console.log("duplicate call to grabBrowseImageUri");
+        }
+        else {
+            grabBrowseImageUriIds.push(item.id);
+        }
+        console.log("grabBrowseImageUriCount:" + ++grabBrowseImageUriCount + ", item.id:" + item.id);
+        var browseImageUri;
         if (item.previewImage){
             if (item.previewImage.small && item.previewImage.small.uri){
-                browseImageUrl = item.previewImage.small.uri;
+                browseImageUri = item.previewImage.small.uri;
             }
         }
         else if (item.webLinks) {
@@ -115,26 +126,27 @@ var sbItemUtils = {
                     found = true;
                     console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
                     if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
-                        browseImageUrl = webLink.uri;
+                        browseImageUri = webLink.uri;
                     }
 
                 }
             }
         }
-        return browseImageUrl;
+        return browseImageUri;
     },
-
-    grabPreviewImageUrl: function(item) {
-        console.log("grabPreviewImageUrl");
-        var browseImageUrl;
-        console.log (item.previewImage);
+    grabPreviewImageUri: function(item) {
+        console.log("grabPreviewImageUri:" + ++grabPreviewImageUriCount + ", item.id:" + item.id);
+        var browseImageUri;
+        //console.log (item.previewImage);
         if (item.previewImage){
-            if (item.previewImage.small && item.previewImage.medium.uri){
-                browseImageUrl = item.previewImage.medium.uri;
+            if (item.previewImage.medium && item.previewImage.medium.uri){
+                browseImageUri = item.previewImage.medium.uri;
+            }
+            else if (item.previewImage.small && item.previewImage.small.uri){
+                browseImageUri = item.previewImage.small.uri;
             }
         }
         else if (item.webLinks) {
-
             var found = false;
             for (var i = 0; (!found && i < item.webLinks.length); i++) {
                 var webLink = item.webLinks[i]
@@ -142,16 +154,25 @@ var sbItemUtils = {
                     found = true;
                     console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
                     if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
-                        browseImageUrl = webLink.uri;
+                        browseImageUri = webLink.uri;
                     }
-
                 }
             }
         }
-        return browseImageUrl;
+
+        if (jQuery.inArray(browseImageUri, galleryImageBlackList) >= 0){
+            browseImageUri = null;
+        }
+
+        return browseImageUri;
     }
 
 };
+
+
+var galleryImageBlackList =
+    ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
+        'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
 
 
 
