@@ -85,6 +85,11 @@ angular.module('explorer.controllers', [])
                 }
             });
         });
+
+        $scope.$on('clear_items', function() {
+            $scope.slides = [];
+        });
+
     }])
     .controller('DummySlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = dummySlides;
