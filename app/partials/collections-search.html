@@ -1,19 +1,11 @@
 <style type="text/css">
-    /*div.carousel-inner {*/
-    /*height: 400px;*/
-    /*}*/
-
-
-    /*div.carousel-inner div.item {*/
   .carousel-inner > .item {
     background: #000000;
-    height: 400px;
+    height: 400px !important;
   }
 
-    /*div.carousel-inner div.item img {*/
-  .carousel-inner > .item > img {
-    max-height: 400px;
-    vertical-align: middle;
+  .carousel-inner > .item > a > img {
+    max-height: 400px !important;
   }
 
   .carousel-caption {
@@ -31,7 +23,7 @@
 
   <div class="container" ng-controller="SlidesCtrl">
     <div class="row">
-      <div class="span12">
+      <div class="span12" id="itemCarouselContainer">
 
         <carousel interval="carouselInterval">
           <slide ng-repeat="slide in slides" active="slide.active">
