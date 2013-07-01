@@ -60,16 +60,15 @@ angular.module('explorer.directives', [])
             link: function($scope, $element, attrs) {
                 console.log($scope.item.id, $scope.item.$$hashKey);
 
-                $scope.grabBrowseImage = function() {
-                    var browseImageUrl;
-                    console.log("grabBrowseImage", $scope.item.id, $scope.item.$$hashKey);
+                $scope.grabBrowseImageUri = function() {
+                    var browseImageUri;
+                    console.log("grabBrowseImageUri", $scope.item.id, $scope.item.$$hashKey);
                     if ($scope.item.previewImage){
                         if ($scope.item.previewImage.small && $scope.item.previewImage.small.uri){
-                            browseImageUrl = $scope.item.previewImage.small.uri;
+                            browseImageUri = $scope.item.previewImage.small.uri;
                         }
                     }
                     else if ($scope.item.webLinks) {
-
                         var found = false;
                         for (var i = 0; (!found && i < $scope.item.webLinks.length); i++) {
                             var webLink = $scope.item.webLinks[i]
@@ -77,16 +76,15 @@ angular.module('explorer.directives', [])
                                 found = true;
                                 console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, ImageUtilService.browseImageBlackList)) );
                                 if (jQuery.inArray(webLink.uri, ImageUtilService.browseImageBlackList) == -1){
-                                    browseImageUrl = webLink.uri;
+                                    browseImageUri = webLink.uri;
                                 }
-
                             }
                         }
                     }
-                    return browseImageUrl;
+                    return browseImageUri;
                 }
 
-                $scope.item.browseImage = $scope.item.browseImage != undefined ? $scope.item.browseImage : $scope.grabBrowseImage(); 
+                $scope.item.browseImageUri = $scope.item.browseImageUri != undefined ? $scope.item.browseImage : $scope.grabBrowseImageUri();
             }
         }
     }]);

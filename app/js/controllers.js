@@ -49,8 +49,6 @@ angular.module('explorer.controllers', [])
         $scope.filterCount = 0;
         $scope.queryParams = $.param($location.search());
 
-        $scope.grabBrowseImageUrl = sbItemUtils.grabBrowseImageUrl;
-
         $scope.$on('new_items', function() {
             $scope.items = $scope.items.concat(SearchService.items);
             $scope.itemsTotal = SearchService.itemsTotal;
@@ -78,7 +76,7 @@ angular.module('explorer.controllers', [])
     .controller('SlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = [];
         $scope.carouselInterval = 5000; //-1
-        $scope.grabSlideImageUri = sbItemUtils.grabPreviewImageUri;
+        $scope.grabSlideImageUri = sbItemUtils.grabGalleryImageUri;
 
         $scope.$on('new_items', function () {
             $.each(SearchService.items, function (index, item) {
@@ -95,52 +93,17 @@ angular.module('explorer.controllers', [])
     }]);
 
 
-var grabBrowseImageUriCount = 0;
-var grabBrowseImageUriIds = [];
-var grabPreviewImageUriCount = 0;
 var sbItemUtils = {
 
-    grabBrowseImageUri: function(item) {
-        if (jQuery.inArray(item.id, grabBrowseImageUriIds) > -1) {
-            console.log("duplicate call to grabBrowseImageUri");
-        }
-        else {
-            grabBrowseImageUriIds.push(item.id);
-        }
-        console.log("grabBrowseImageUriCount:" + ++grabBrowseImageUriCount + ", item.id:" + item.id);
-        var browseImageUri;
-        if (item.previewImage){
-            if (item.previewImage.small && item.previewImage.small.uri){
-                browseImageUri = item.previewImage.small.uri;
-            }
-        }
-        else if (item.webLinks) {
-
-            var found = false;
-            for (var i = 0; (!found && i < item.webLinks.length); i++) {
-                var webLink = item.webLinks[i]
-                if (webLink.type && webLink.type == 'browseImage') {
-                    found = true;
-                    console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
-                    if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
-                        browseImageUri = webLink.uri;
-                    }
-
-                }
-            }
-        }
-        return browseImageUri;
-    },
-    grabPreviewImageUri: function(item) {
-        console.log("grabPreviewImageUri:" + ++grabPreviewImageUriCount + ", item.id:" + item.id);
-        var browseImageUri;
+    grabGalleryImageUri: function(item) {
+        var galleryImageUri;
         //console.log (item.previewImage);
         if (item.previewImage){
             if (item.previewImage.medium && item.previewImage.medium.uri){
-                browseImageUri = item.previewImage.medium.uri;
+                galleryImageUri = item.previewImage.medium.uri;
             }
             else if (item.previewImage.small && item.previewImage.small.uri){
-                browseImageUri = item.previewImage.small.uri;
+                galleryImageUri = item.previewImage.small.uri;
             }
         }
         else if (item.webLinks) {
@@ -149,19 +112,18 @@ var sbItemUtils = {
                 var webLink = item.webLinks[i]
                 if (webLink.type && webLink.type == 'browseImage') {
                     found = true;
-                    console.log ( webLink.uri + ": " + (jQuery.inArray(webLink.uri, browseImageBlackList)) );
                     if (jQuery.inArray(webLink.uri, browseImageBlackList) == -1){
-                        browseImageUri = webLink.uri;
+                        galleryImageUri = webLink.uri;
                     }
                 }
             }
         }
 
-        if (jQuery.inArray(browseImageUri, galleryImageBlackList) >= 0){
-            browseImageUri = null;
+        if (jQuery.inArray(galleryImageUri, galleryImageBlackList) >= 0){
+            galleryImageUri = null;
         }
 
-        return browseImageUri;
+        return galleryImageUri;
     }
 };
 
@@ -169,12 +131,6 @@ var sbItemUtils = {
 var galleryImageBlackList =
     ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
         'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
-
-
-
-var browseImageBlackList =
-    ['http://pubs.er.usgs.gov/thumbnails/usgs_thumb.jpg',
-    'http://pubs.er.usgs.gov/thumbnails/outside_thumb.jpg']
 
 var dummySlides = [
     {image:"img/slides/ClimateChange.png", title:"", text:""},

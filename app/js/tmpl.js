@@ -43,12 +43,18 @@ angular.module("template/item.html", []).run(["$templateCache", function($templa
     $templateCache.put("template/item.html",
         "<div class=\"sb-item shadowbox media\" style=\"zoom:1;\">" +
             "<a href=\"{{item.link.url}}\"><h4 class=\"media-heading\">{{item.title}}</h4></a>" +
-            "<img class=\"pull-left\" ng-src=\"{{item.browseImage}}\" style=\"max-height: 100px; max-width: 100px;\" />" +
+            "<img class=\"pull-left\" ng-src=\"{{item.browseImageUri}}\" style=\"max-height: 200px; max-width: 100px;\" />" +
             "<div class=\"media-body\">" +
                 "<p>{{item.summary}}</p>" +
                 "<a class=\"label label-info dist-link\" ng-repeat=\"distLink in item.distributionLinks\" href=\"{{distLink.uri}}\">" +
                     "{{distLink.title}}" +
                 "</a>" +
+                "<span ng-show=\"item.previewImage.original\">" +
+                "<a ng-show=\"item.previewImage.small.uri\" class=\"label label-info dist-link\" href=\"{{item.previewImage.small.uri}}\">Small Image</a>" +
+                "<a ng-show=\"item.previewImage.medium.uri\" class=\"label label-info dist-link\" href=\"{{item.previewImage.medium.uri}}\">Medium Image</a>" +
+                "<a ng-show=\"item.previewImage.large.uri\"class=\"label label-info dist-link\" href=\"{{item.previewImage.large.uri}}\">Large Image</a>" +
+                "<a ng-show=\"item.previewImage.original.uri\"class=\"label label-info dist-link\" href=\"{{item.previewImage.original.viewUri}}\">Full Image</a>" +
+                "</span>" +
             "</div>" +
         "</div>"
     );
