@@ -38,7 +38,7 @@ angular.module('explorer.controllers', [])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
         SearchService.setPlaceHolder('Search Data');
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
-        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagNameForTypeAndScheme'];
+        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
         SearchService.searchParams = {offset: 0};
 

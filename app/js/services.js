@@ -70,7 +70,33 @@ angular.module('explorer.services', ['ngResource']).
         self.applyFilter = function(facet, val) {
             $rootScope.$broadcast('clear_items');
             self.searchParams['offset'] = 0;
-            self.filters.push({key: facet.name, val: val, facetLabel: facet.label});
+
+            var facetName = facet.name;
+            if (facetName == 'tagType' || facetName == 'tagScheme' || facetName == 'tagNameForTypeAndScheme'){
+                var tagFilter = {};
+                var tagFilterValObj = {};
+
+                jQuery.each(self.filters, function(index, value){
+                    if (value.key == 'tags') {
+                        var tagFilterArray = self.filters.splice(index,1)
+                        tagFilter = tagFilterArray[0];
+                        tagFilterValObj = jQuery.parseJSON(tagFilter.val);
+                    }
+                });
+
+                if (facetName == 'tagType') tagFilterValObj.type = val;
+                if (facetName == 'tagScheme') tagFilterValObj.scheme = val;
+                if (facetName == 'tagNameForTypeAndScheme') tagFilterValObj.name = val;
+
+                var tagFilterVal = JSON.stringify(tagFilterValObj);
+
+                self.filters.push({key: 'tags', val: tagFilterVal, filterLabel: 'Tags'});
+            }
+            else {
+                self.filters.push({key: facet.name, val: val, filterLabel: facet.label});
+            }
+
+
             self.search(self.searchParams['q']);
         };
 

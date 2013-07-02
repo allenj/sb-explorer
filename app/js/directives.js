@@ -58,11 +58,11 @@ angular.module('explorer.directives', [])
             transclude: true,
             templateUrl: 'template/item.html',
             link: function($scope, $element, attrs) {
-                console.log($scope.item.id, $scope.item.$$hashKey);
+                //console.log($scope.item.id, $scope.item.$$hashKey);
 
                 $scope.grabBrowseImageUri = function() {
                     var browseImageUri;
-                    console.log("grabBrowseImageUri", $scope.item.id, $scope.item.$$hashKey);
+                    //console.log("grabBrowseImageUri", $scope.item.id, $scope.item.$$hashKey);
                     if ($scope.item.previewImage){
                         if ($scope.item.previewImage.small && $scope.item.previewImage.small.uri){
                             browseImageUri = $scope.item.previewImage.small.uri;
@@ -71,7 +71,7 @@ angular.module('explorer.directives', [])
                     else if ($scope.item.webLinks) {
                         var found = false;
                         for (var i = 0; (!found && i < $scope.item.webLinks.length); i++) {
-                            var webLink = $scope.item.webLinks[i]
+                            var webLink = $scope.item.webLinks[i];
                             if (webLink.type && webLink.type == 'browseImage') {
                                 found = true;
                                 if (jQuery.inArray(webLink.uri, ImageUtilService.galleryImageBlackList) == -1){
@@ -81,7 +81,7 @@ angular.module('explorer.directives', [])
                         }
                     }
                     return browseImageUri;
-                }
+                };
 
                 $scope.item.browseImageUri = $scope.item.browseImageUri != undefined ? $scope.item.browseImage : $scope.grabBrowseImageUri();
             }

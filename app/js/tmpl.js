@@ -30,10 +30,10 @@ angular.module("template/facet.html", []).run(["$templateCache", function($templ
 
 angular.module("template/filter.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/filter.html",
-        "<li ng-show=\"filter.facetLabel != undefined\">" +
-            "<a title=\"{{filter.facetLabel}}: {{filter.val}}\" ng-click=\"removeFilter()\">" +
+        "<li ng-show=\"filter.filterLabel != undefined\">" +
+            "<a title=\"{{filter.filterLabel}}: {{filter.val}}\" ng-click=\"removeFilter()\">" +
                 "<i class=\"icon-minus pull-right\"></i>" +
-                "{{filter.facetLabel}}: {{filter.val|facetChars:17:false:filter.facetLabel}}" +
+                "{{filter.filterLabel}}: {{filter.val|facetChars:17:false:filter.filterLabel}}" +
             "</a>" +
         "</li>"
     );
