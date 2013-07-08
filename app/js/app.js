@@ -20,8 +20,4 @@ angular.module('explorer',
                   .otherwise({redirectTo: '/collections'});
   }]);
 
-
 }());
-
-
-
