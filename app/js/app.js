@@ -1,5 +1,5 @@
+(function () {
 'use strict';
-
 
 // Declare app level module which depends on filters, and services
 angular.module('explorer',
@@ -19,3 +19,9 @@ angular.module('explorer',
                   .when('/collections/:parentId', {templateUrl: 'partials/collections-search.html', controller: 'SearchCtrl'})
                   .otherwise({redirectTo: '/collections'});
   }]);
+
+
+}());
+
+
+

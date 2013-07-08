@@ -1,3 +1,5 @@
+(function () {
+
 'use strict';
 
 /* Filters */
@@ -6,7 +8,7 @@ angular.module('explorer.filters', [])
     .filter('interpolate', ['version', function(version) {
         return function(text) {
             return String(text).replace(/\%VERSION\%/mg, version);
-        }
+        };
     }])
     .filter('facetChars', function() {
         return function(input, nChars, truncateOnWord, facetCount) {
@@ -77,3 +79,5 @@ function removeContactId(input) {
     }
     return input;
 }
+
+}());

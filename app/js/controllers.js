@@ -1,3 +1,5 @@
+(function () {
+
 'use strict';
 
 
@@ -8,9 +10,9 @@ var COLLECTIONS_PARENT_ID = "5137a368e4b066106b2eb640";
 angular.module('explorer.controllers', [])
     .controller('CollectionsCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         SearchService.setPlaceHolder('Search Data Collections');
-        SearchService.searchParams['parentId'] = COLLECTIONS_PARENT_ID;
-        SearchService.searchParams['offset'] = 0;
-        SearchService.filters = []; 
+        SearchService.searchParams.parentId = COLLECTIONS_PARENT_ID;
+        SearchService.searchParams.offset = 0;
+        SearchService.filters = [];
         SearchService.fields = ['title', 'summary'];
 
         $scope.$on('new_items', function() {
@@ -27,7 +29,7 @@ angular.module('explorer.controllers', [])
     .controller('NavCtrl', [ '$scope', '$rootScope', 'SearchService', function ($scope, $rootScope, SearchService) {
         $scope.doSearch = function() {
             $rootScope.$broadcast('clear_items');
-            SearchService.searchParams['offset'] = 0;
+            SearchService.searchParams.offset = 0;
             SearchService.search($scope.q);
         };
 
@@ -69,7 +71,7 @@ angular.module('explorer.controllers', [])
         $scope.nextPage = function() {
             if ($scope.busy) return;
             $scope.busy = true;
-            SearchService.searchParams['offset'] += 20;
+            SearchService.searchParams.offset += 20;
             SearchService.search();
         };
     }])
@@ -81,7 +83,7 @@ angular.module('explorer.controllers', [])
             $.each(SearchService.items, function (index, item) {
                 var ImageUri = ImageUtilService.grabGalleryImageUri(item);
                 if (ImageUri) {
-                    $scope.slides.push({image:ImageUri, title:item.title, text:item.summary, itemLink: item.link.url})
+                    $scope.slides.push({image:ImageUri, title:item.title, text:item.summary, itemLink: item.link.url});
                 }
             });
         });
@@ -118,3 +120,4 @@ var dummySlides = [
     {image:"img/slides/WaterResources.png", title:"", text:""}
 ];
 
+}());

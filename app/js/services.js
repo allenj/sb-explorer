@@ -1,3 +1,5 @@
+(function () {
+
 'use strict';
 
 /* Services */
@@ -27,7 +29,7 @@ angular.module('explorer.services', ['ngResource']).
         self.placeHolder  = "";
 
         self.search = function(searchString) {
-            self.searchParams['q'] = searchString ? searchString : '';
+            self.searchParams.q = searchString ? searchString : '';
 
             var result = ItemsResult.query(self._getSearchObj(self), function() {
                 self.items = result.items;
@@ -69,24 +71,24 @@ angular.module('explorer.services', ['ngResource']).
 
         self.applyFilter = function(facet, val) {
             $rootScope.$broadcast('clear_items');
-            self.searchParams['offset'] = 0;
+            self.searchParams.offset = 0;
 
             var facetName = facet.name;
-            if (facetName == 'tagType' || facetName == 'tagScheme' || facetName == 'tagNameForTypeAndScheme'){
+            if (facetName === 'tagType' || facetName === 'tagScheme' || facetName === 'tagNameForTypeAndScheme'){
                 var tagFilter = {};
                 var tagFilterValObj = {};
 
                 jQuery.each(self.filters, function(index, value){
-                    if (value.key == 'tags') {
-                        var tagFilterArray = self.filters.splice(index,1)
+                    if (value.key === 'tags') {
+                        var tagFilterArray = self.filters.splice(index,1);
                         tagFilter = tagFilterArray[0];
                         tagFilterValObj = jQuery.parseJSON(tagFilter.val);
                     }
                 });
 
-                if (facetName == 'tagType') tagFilterValObj.type = val;
-                if (facetName == 'tagScheme') tagFilterValObj.scheme = val;
-                if (facetName == 'tagNameForTypeAndScheme') tagFilterValObj.name = val;
+                if (facetName === 'tagType') tagFilterValObj.type = val;
+                if (facetName ==='tagScheme') tagFilterValObj.scheme = val;
+                if (facetName === 'tagNameForTypeAndScheme') tagFilterValObj.name = val;
 
                 var tagFilterVal = JSON.stringify(tagFilterValObj);
 
@@ -97,17 +99,17 @@ angular.module('explorer.services', ['ngResource']).
             }
 
 
-            self.search(self.searchParams['q']);
+            self.search(self.searchParams.q);
         };
 
         self.removeFilter = function(key, val) {
             $rootScope.$broadcast('clear_items');
-            self.searchParams['offset'] = 0;
+            self.searchParams.offset = 0;
             self.filters = $.grep(self.filters, function(elem) {
-                return (!(elem.key == key && elem.val == val));
+                return (!(elem.key === key && elem.val === val));
             });
-            self.search(self.searchParams['q']);
-        }
+            self.search(self.searchParams.q);
+        };
 
         return self;
     })
@@ -131,10 +133,10 @@ angular.module('explorer.services', ['ngResource']).
             else if (item.webLinks) {
                 var found = false;
                 for (var i = 0; (!found && i < item.webLinks.length); i++) {
-                    var webLink = item.webLinks[i]
-                    if (webLink.type && webLink.type == 'browseImage') {
+                    var webLink = item.webLinks[i];
+                    if (webLink.type && webLink.type === 'browseImage') {
                         found = true;
-                        if (jQuery.inArray(webLink.uri, self.galleryImageBlackList) == -1){
+                        if (jQuery.inArray(webLink.uri, self.galleryImageBlackList) === -1){
                             galleryImageUri = webLink.uri;
                         }
                     }
@@ -146,9 +148,12 @@ angular.module('explorer.services', ['ngResource']).
             }
 
             return galleryImageUri;
-        }
+        };
 
 
         return self;
     })
     .value('version', '0.1');
+
+
+}());

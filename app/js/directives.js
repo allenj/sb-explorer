@@ -1,3 +1,5 @@
+(function () {
+
 'use strict';
 
 /* Directives */
@@ -32,7 +34,7 @@ angular.module('explorer.directives', [])
             link: function($scope, $element, attrs) {
                 $scope.applyFilter = function() {
                     if ($scope.$parent.facet && $scope.entry.term) {
-                        SearchService.applyFilter($scope.$parent.facet, $scope.entry.term);    
+                        SearchService.applyFilter($scope.$parent.facet, $scope.entry.term);
                     }
                 };
             }
@@ -72,9 +74,9 @@ angular.module('explorer.directives', [])
                         var found = false;
                         for (var i = 0; (!found && i < $scope.item.webLinks.length); i++) {
                             var webLink = $scope.item.webLinks[i];
-                            if (webLink.type && webLink.type == 'browseImage') {
+                            if (webLink.type && webLink.type === 'browseImage') {
                                 found = true;
-                                if (jQuery.inArray(webLink.uri, ImageUtilService.galleryImageBlackList) == -1){
+                                if (jQuery.inArray(webLink.uri, ImageUtilService.galleryImageBlackList) === -1){
                                     browseImageUri = webLink.uri;
                                 }
                             }
@@ -83,7 +85,9 @@ angular.module('explorer.directives', [])
                     return browseImageUri;
                 };
 
-                $scope.item.browseImageUri = $scope.item.browseImageUri != undefined ? $scope.item.browseImage : $scope.grabBrowseImageUri();
+                $scope.item.browseImageUri = $scope.item.browseImageUri !== undefined ? $scope.item.browseImage : $scope.grabBrowseImageUri();
             }
-        }
+        };
     }]);
+
+}());
