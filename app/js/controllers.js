@@ -28,11 +28,16 @@ angular.module('explorer.controllers', [])
         $scope.doSearch = function() {
             $rootScope.$broadcast('clear_items');
             SearchService.searchParams.offset = 0;
+            SearchService.searchParams.q = $scope.q;
             SearchService.search($scope.q);
         };
 
         $scope.$on('clear_search', function() {
             $scope.q = '';
+        });
+
+        $scope.$on('new_items', function() {
+            if (SearchService.searchParams.q) $scope.q = SearchService.searchParams.q;
         });
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
@@ -40,14 +45,39 @@ angular.module('explorer.controllers', [])
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
-        SearchService.searchParams = {offset: 0};
+
+        SearchService.searchParams.offset = 0;
+
+        function _useExternalParams(paramObj) {
+            if (paramObj.q) {
+                SearchService.searchParams.q = paramObj.q;
+            }
+            if (paramObj.filter) {
+                var filterString = paramObj.filter;
+                var filter = [];
+
+                if (filterString.indexOf('%3D') > 0) {
+                    filter = filterString.split("%3D");
+                }
+                if (filterString.indexOf('=') > 0) {
+                    filter = filterString.split("=");
+                }
+
+                if (filter.length === 2) {
+                    SearchService.filters.push({key: filter[0], val: filter[1], filterLabel: filter[0]});
+                }
+            }
+        }
+
+        var externalParams = $.deparam(window.location.search.substring(1));
+        _useExternalParams(externalParams);
+        _useExternalParams($location.search());
 
         $scope.items = [];
         $scope.itemsTotal = 0;
         $scope.searchFacets = [];
         $scope.busy = false;
         $scope.filterCount = 0;
-        $scope.queryParams = $.param($location.search());
 
         $scope.$on('new_items', function() {
             $scope.items = $scope.items.concat(SearchService.items);

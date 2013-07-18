@@ -28,7 +28,7 @@ angular.module('explorer.services', ['ngResource']).
         self.placeHolder  = "";
 
         self.search = function(searchString) {
-            self.searchParams.q = searchString ? searchString : '';
+            self.searchParams.q = self.searchParams.q ? self.searchParams.q : searchString ? searchString : '';
 
             var result = ItemsResult.query(self._getSearchObj(self), function() {
                 self.items = result.items;
