@@ -1,10 +1,7 @@
 (function () {
 'use strict';
 
-var COLLECTIONS_PARENT_ID = "5137a368e4b066106b2eb640";
-// var COLLECTIONS_PARENT_ID = "4f3559d2da0661d9ec041a0a";
 /* Controllers */
-
 angular.module('explorer.controllers', [])
     .controller('CollectionsCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         SearchService.setPlaceHolder('Search Data Collections');
