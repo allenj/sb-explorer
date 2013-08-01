@@ -44,7 +44,7 @@ angular.module('explorer.controllers', [])
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
 
         SearchService.searchParams.offset = 0;
-        delete SearchService.searchParams['browseCategory'];
+        delete SearchService.searchParams.browseCategory;
 
         var externalParams = $.deparam(window.location.search.substring(1));
         SearchService.applyQParams(externalParams);
