@@ -44,31 +44,11 @@ angular.module('explorer.controllers', [])
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
 
         SearchService.searchParams.offset = 0;
-
-        function _useExternalParams(paramObj) {
-            if (paramObj.q) {
-                SearchService.searchParams.q = paramObj.q;
-            }
-            if (paramObj.filter) {
-                var filterString = paramObj.filter;
-                var filter = [];
-
-                if (filterString.indexOf('%3D') > 0) {
-                    filter = filterString.split("%3D");
-                }
-                if (filterString.indexOf('=') > 0) {
-                    filter = filterString.split("=");
-                }
-
-                if (filter.length === 2) {
-                    SearchService.filters.push({key: filter[0], val: filter[1], filterLabel: filter[0]});
-                }
-            }
-        }
+        delete SearchService.searchParams['browseCategory'];
 
         var externalParams = $.deparam(window.location.search.substring(1));
-        _useExternalParams(externalParams);
-        _useExternalParams($location.search());
+        SearchService.applyQParams(externalParams);
+        SearchService.applyQParams($location.search());
 
         $scope.items = [];
         $scope.itemsTotal = 0;

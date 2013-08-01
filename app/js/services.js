@@ -110,6 +110,27 @@ angular.module('explorer.services', ['ngResource']).
             self.search(self.searchParams.q);
         };
 
+        self.applyQParams = function(paramObj) {
+            if (paramObj.q) {
+                self.searchParams.q = paramObj.q;
+            }
+            if (paramObj.filter) {
+                var filterString = paramObj.filter;
+                var filter = [];
+
+                if (filterString.indexOf('%3D') > 0) {
+                    filter = filterString.split("%3D");
+                }
+                if (filterString.indexOf('=') > 0) {
+                    filter = filterString.split("=");
+                }
+
+                if (filter.length === 2) {
+                    self.filters.push({key: filter[0], val: filter[1], filterLabel: filter[0]});
+                }
+            }
+        };
+
         return self;
     })
     .factory('ImageUtilService', function() {
