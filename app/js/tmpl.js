@@ -42,7 +42,7 @@ angular.module("template/filter.html", []).run(["$templateCache", function($temp
 angular.module("template/item.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/item.html",
         "<div class=\"sb-item shadowbox media\" style=\"zoom:1;\">" +
-            "<a href=\"{{item.link.url}}\"><h4 class=\"media-heading\">{{item.title}}</h4></a>" +
+            "<a href=\"#/item/{{item.id}}\"><h4 class=\"media-heading\">{{item.title}}</h4></a>" +
             "<img class=\"pull-left\" ng-src=\"{{item.browseImageUri}}\" style=\"max-height: 200px; max-width: 100px;\" />" +
             "<div class=\"media-body\">" +
                 "<p>{{item.summary}}</p>" +

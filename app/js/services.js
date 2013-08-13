@@ -13,7 +13,10 @@ angular.module('explorer.services', ['ngResource']).
     })
     .factory('Item', function($resource) {
         return $resource(HOSTNAME + '/catalog/item/:itemId', {itemId: '@id'}, {
-            get: {method: 'GET'}
+            get: {method: 'GET', params:{fields:'identifiers,title,subTitle,alternateTitles,summary,body,purpose,rights,' +
+                'provenance,materialRequestInstructions,hasChildren,parentId,contacts,webLinks,browseCategories,browseTypes,' +
+                'systemTypes,tags,dates,spatial,extents,facets,files,permissions?,distributionLinks,previewImage,locked,' +
+                'relationships,usgscitation'}}
         });
     })
     .factory('SearchService', function(ItemsResult, $rootScope) {

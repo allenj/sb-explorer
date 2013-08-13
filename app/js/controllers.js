@@ -101,6 +101,24 @@ angular.module('explorer.controllers', [])
     .controller('DummySlidesCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         $scope.slides = dummySlides;
         $scope.carouselInterval = 5000;
+    }])
+    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', function ($scope, $routeParams, Item) {
+        $scope.message = null;
+        var item = Item.get({itemId:$routeParams.itemId}
+            ,function() {
+                $scope.item = item;
+            }
+            ,function(response) {
+                //404 or bad
+                $scope.item = null;
+                if (response.status === 404) {
+                    $scope.message = 'Item not found for ID=' + $routeParams.itemId;
+                }
+                else {
+                    $scope.message = 'Failed to load ID=' + $routeParams.itemId + ' (status=' + response.status + ')';
+                }
+            }
+        );
     }]);
 
 

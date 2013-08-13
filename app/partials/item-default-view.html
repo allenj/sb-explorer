@@ -1,0 +1,144 @@
+<div id="bd" style="margin: 1em;">
+  <div data-ng-show="message" style="border: 1px solid #999999; background: #ffffcc;">
+    {{message}}
+  </div>
+
+
+  <div data-ng-show="item">
+    <div>
+      <h2>{{item.title}}</h2>
+    </div>
+
+    <h3 data-ng-bind="item.subTitle"></h3>
+
+
+    <div data-ng-bind-html="item.body"></div>
+
+
+    <div data-ng-show="item.contacts">
+      <h3>Contacts</h3>
+      <span data-ng-repeat="contact in item.contacts">{{contact.name}} <span data-ng-show="contact.type" style="font-style: italic;">({{contact.type}})</span><span data-ng-show="!$last">, </span></span>
+    </div>
+
+
+    <div data-ng-show="item.browseCategories">
+      <h3>Categories</h3>
+      <span data-ng-repeat="bc in item.browseCategories">{{bc}}<span data-ng-show="!$last">, </span></span>
+    </div>
+
+    <div data-ng-show="item.browseTypes">
+      <h3>Types</h3>
+      <span data-ng-repeat="bt in item.browseTypes">{{bt}}<span data-ng-show="!$last">, </span></span>
+    </div>
+
+    <div data-ng-show="item.tags">
+      <h3>Tags</h3>
+      <span data-ng-repeat="tag in item.tags">{{tag.name}}<span data-ng-show="!$last">, </span></span>
+    </div>
+
+    <div data-ng-show="item.dates">
+      <h3>Dates</h3>
+      <ul>
+        <li data-ng-repeat="itemDate in item.dates"><span data-ng-show="itemDate.type" class="sb-label">{{itemDate.type}}: </span>{{itemDate.dateString}}</li>
+      </ul>
+    </div>
+
+
+    <div data-ng-show="item.id">
+      <h3>Identifiers</h3>
+      <ul>
+        <li><span class="sb-label">ID:</span> {{item.id}}</li>
+        <li><span class="sb-label">URI:</span> <a href="{{item.link.url}}">{{item.link.url}}</a></li>
+        <li data-ng-show="item.identifiers"><span class="sb-label">Alternate Identifiers:</span><br/>
+          <ul>
+            <li data-ng-repeat="identifier in item.identifiers">{{identifier}}</li>
+          </ul>
+        </li>
+      </ul>
+     </div>
+
+    <div data-ng-show="item.alternateTitles">
+      <h3>Alternate Titles</h3>
+      <ul>
+        <li data-ng-repeat="alternateTitle in item.alternateTitles">{{alternateTitle}}</li>
+      </ul>
+    </div>
+
+
+
+    <div data-ng-show="item.relationships.total">
+      <h3>Related Items</h3>
+      <ul>
+        <li data-ng-repeat="relatedItem in item.relationships">{{relatedItem}}</li>
+      </ul>
+    </div>
+
+
+    <div data-ng-show="item.webLinks">
+      <h3>Web Links</h3>
+      <ul>
+        <li data-ng-repeat="webLink in item.webLinks">
+          <a href="{{webLink.uri}}" rel="{{webLink.rel}}" title="{{webLink.typeLabel}}">{{webLink.title}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div data-ng-show="item.distributionLinks">
+      <h3>Distribution Links</h3>
+      <ul>
+        <li data-ng-repeat="dl in item.distributionLinks">
+          <a href="{{dl.uri}}" rel="{{dl.rel}}" title="{{dl.typeLabel}}">{{dl.title}}</a>
+        </li>
+      </ul>
+    </div>
+
+
+    <div data-ng-show="item.purpose">
+      <h3>Purpose</h3>
+      {{item.purpose}}
+    </div>
+
+    <div data-ng-show="item.rights">
+      <h3>Rights</h3>
+      {{item.rights}}
+    </div>
+
+    <div data-ng-show="item.materialRequestInstructions">
+      <h3>Material Request Instructions</h3>
+      {{item.materialRequestInstructions}}
+    </div>
+
+    <div data-ng-show="item.provenance">
+      <h3>Provenance</h3>
+      {{item.provenance}}
+    </div>
+
+
+
+
+    <!--
+    always included fields: id, link
+
+    default fields:
+identifiers,title,subTitle,alternateTitles,summary,body,purpose,rights,provenance,materialRequestInstructions,
+hasChildren,parentId,contacts,webLinks,browseCategories,browseTypes,systemTypes,tags,dates,spatial,
+extents,facets,files,permissions?,distributionLinks,previewImage,locked
+
+optional fields:
+relationships,usgscitation
+
+NOT YET DISPLAYED: summary, hasChildren, parentId, systemTypes, spatial, extents, facets, files, permissions,distributionLinks, previewImage, locked
+
+    -->
+
+
+    <div style="margin-top:6em;background: #cccccc;">
+      <pre>
+        {{ item | json }}
+      </pre>
+
+    </div>
+
+
+  </div>
+</div>
