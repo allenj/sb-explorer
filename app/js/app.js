@@ -9,6 +9,7 @@ angular.module('explorer',
         'explorer.directives',
         'explorer.tmpls',
         'explorer.controllers',
+        'explorer.leaflet-directive',
         'ui.utils',
         'infinite-scroll',
         'ui.bootstrap',
@@ -19,6 +20,7 @@ angular.module('explorer',
     $routeProvider.when('/collections', {templateUrl: 'partials/collections-list.html', controller: 'CollectionsCtrl'})
                   .when('/collections/:parentId', {templateUrl: 'partials/collections-search.html', controller: 'SearchCtrl'})
                   .when('/item/:itemId', {templateUrl: 'partials/item-default-view.html', controller: 'ItemCtrl'})
+                  .when('/mapSearch', {templateUrl: 'partials/map-search.html', controller: 'MapSearchCtrl'})
                   .otherwise({redirectTo: '/collections'});
   }])
   .constant('APP_CONFIG',{

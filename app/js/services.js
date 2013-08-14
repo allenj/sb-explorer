@@ -175,6 +175,13 @@ angular.module('explorer.services', ['ngResource']).
 
         return self;
     })
+    .factory('MapService', function() {
+        var self = this;
+
+
+
+        return self;
+    })
     .value('version', '0.1');
 
 

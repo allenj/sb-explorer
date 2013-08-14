@@ -1,0 +1,30 @@
+<div id="bd">
+	<div class="container">
+		<div class="row">
+			<div class="span9">
+				<leaflet center="center" height="480px" width="960px" zoom="3" lat="39.50" lng="-95.35"></leaflet>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" id="search-results">
+    <div class="row">
+      <div class="span3">
+        <div id="search-facets">
+          <h5>Items <span class="badge badge-info pull-right">{{items.length | number}} / {{itemsTotal | number}}</span></h5>
+          <div>
+            <h5>Applied Filters</h5>
+            <ul class="nav nav-list">
+              <filter ng-repeat="filter in filters"></filter>
+            </ul>
+          </div>
+          <facet ng-repeat="facet in searchFacets"></facet>
+        </div>
+      </div>
+      <div class="span9" infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
+        <item ng-repeat="item in items"></item>
+        <div ng-item ng-repeat="item in items"></div>
+      </div>
+    </div>
+  </div>
+</div>

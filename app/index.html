@@ -10,6 +10,13 @@
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/standardHeader.css">
+  <link rel="stylesheet" href="css/bootstrap-glyphicons.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <link rel="stylesheet" href="css/leaflet.draw.css" />
+  <link rel="stylesheet" href="css/leaflet.draw.ie.css" />
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
   <!-- <link href="css/usgs-common.css" rel="stylesheet" media="screen"> -->
   <!-- <link href="css/usgs-ibc-se-common.css" rel="stylesheet" media="screen"> -->
   <style>
@@ -54,6 +61,8 @@
         <span class="fornav"><i class="icon-search"></i></span>
       </div>
     </form>
+    <span ng-click="changeView('map')" class="glyphicon glyphicon-globe pull-right" ng-class="{selected: $scope.view == 'map'}"></span>
+    <span ng-click="changeView('gallery')" class="glyphicon glyphicon-picture pull-right" ng-class="{selected: $scope.view == 'gallery'}"></span>
   </div>
 </div>
 
@@ -91,6 +100,7 @@
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
 <script src="js/directives.js"></script>
+<script src="js/leaflet.js"></script>
 <script src="lib/modernizr/modernizr-latest.js"></script>
 <script src="lib/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="lib/bootstrap/bootstrap.min.js"></script>
@@ -100,14 +110,13 @@
 <script src="lib/jquery-waypoints/waypoints-sticky.min.js"></script>
 <script src="lib/angular-ui/ui-bootstrap-tpls-0.3.0.js"></script>
 <script src="lib/jquery.ba-bbq/jquery.ba-bbq.min.js"></script>
-
+<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+<script src="lib/leaflet.draw/leaflet.draw.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function () {
     $('.sticky').waypoint('sticky');
   });
-
-
 </script>
 </body>
 </html>
