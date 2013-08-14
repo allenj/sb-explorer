@@ -102,8 +102,9 @@ angular.module('explorer.controllers', [])
         $scope.slides = dummySlides;
         $scope.carouselInterval = 5000;
     }])
-    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', function ($scope, $routeParams, Item) {
+    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', 'APP_CONFIG', function ($scope, $routeParams, Item, APP_CONFIG) {
         $scope.message = null;
+        $scope.APP_CONFIG = APP_CONFIG;
         var item = Item.get({itemId:$routeParams.itemId}
             ,function() {
                 $scope.item = item;

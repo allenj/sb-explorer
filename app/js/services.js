@@ -3,16 +3,15 @@
 'use strict';
 
 /* Services */
-var HOSTNAME = "@@hostname@@";
 
 angular.module('explorer.services', ['ngResource']).
-    factory('ItemsResult', function($resource) {
-        return $resource(HOSTNAME + '/catalog/items', {}, {
+    factory('ItemsResult', function($resource, APP_CONFIG) {
+        return $resource(APP_CONFIG.baseUrl + '/catalog/items', {}, {
             query: {method: 'GET'}
         });
     })
-    .factory('Item', function($resource) {
-        return $resource(HOSTNAME + '/catalog/item/:itemId', {itemId: '@id'}, {
+    .factory('Item', function($resource, APP_CONFIG) {
+        return $resource(APP_CONFIG.baseUrl + '/catalog/item/:itemId', {itemId: '@id'}, {
             get: {method: 'GET', params:{fields:'identifiers,title,subTitle,alternateTitles,summary,body,purpose,rights,' +
                 'provenance,materialRequestInstructions,hasChildren,parentId,contacts,webLinks,browseCategories,browseTypes,' +
                 'systemTypes,tags,dates,spatial,extents,facets,files,permissions?,distributionLinks,previewImage,locked,' +

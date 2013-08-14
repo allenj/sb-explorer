@@ -1,4 +1,4 @@
-<div id="bd" style="margin: 1em;">
+<div id="bd" style="padding: 0.5em 1.5em;">
   <div data-ng-show="message" style="border: 1px solid #999999; background: #ffffcc;">
     {{message}}
   </div>
@@ -11,8 +11,16 @@
 
     <h3 data-ng-bind="item.subTitle"></h3>
 
+    <div data-ng-show="item.previewImage.medium">
+      <img ng-src="{{item.previewImage.medium.uri}}"/>
+    </div>
 
     <div data-ng-bind-html="item.body"></div>
+
+    <div data-ng-show="item.spatial.representationalPoint || item.extents">
+      <h3>Location</h3>
+      <img ng-src="{{APP_CONFIG.baseUrl}}/catalog/item/feedMap/{{item.id}}"/>
+    </div>
 
 
     <div data-ng-show="item.contacts">
@@ -100,12 +108,12 @@
 
     <div data-ng-show="item.rights">
       <h3>Rights</h3>
-      {{item.rights}}
+      <div data-ng-bind-html="item.rights"></div>
     </div>
 
     <div data-ng-show="item.materialRequestInstructions">
       <h3>Material Request Instructions</h3>
-      {{item.materialRequestInstructions}}
+      <div data-ng-bind-html="item.materialRequestInstructions"></div>
     </div>
 
     <div data-ng-show="item.provenance">
@@ -132,12 +140,11 @@ NOT YET DISPLAYED: summary, hasChildren, parentId, systemTypes, spatial, extents
     -->
 
 
-    <div style="margin-top:6em;background: #cccccc;">
-      <pre>
-        {{ item | json }}
-      </pre>
-
-    </div>
+    <!--<div style="margin-top:6em;background: #cccccc;">-->
+      <!--<pre>-->
+        <!--{{ item | json }}-->
+      <!--</pre>-->
+    <!--</div>-->
 
 
   </div>

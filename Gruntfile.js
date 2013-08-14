@@ -62,21 +62,21 @@ module.exports = function(grunt) {
         },
         combine: {
             dev: {
-                input: 'dev/js/services.js',
-                output: 'dev/js/services.js',
+                input: 'dev/js/app.js',
+                output: 'dev/js/app.js',
                 tokens: [
                     {
-                        token: "@@hostname@@",
+                        token: "https://www.sciencebase.gov",
                         string: "https://beta.sciencebase.gov"
                     }
                 ]
             },
             dist: {
-                input: 'dist/js/services.js',
-                output: 'dist/js/services.js',
+                input: 'dist/js/app.js',
+                output: 'dist/js/app.js',
                 tokens: [
                     {
-                        token: "@@hostname@@",
+                        token: "https://beta.sciencebase.gov",
                         string: "https://www.sciencebase.gov"
                     }
                 ]

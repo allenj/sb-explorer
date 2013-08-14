@@ -20,6 +20,9 @@ angular.module('explorer',
                   .when('/collections/:parentId', {templateUrl: 'partials/collections-search.html', controller: 'SearchCtrl'})
                   .when('/item/:itemId', {templateUrl: 'partials/item-default-view.html', controller: 'ItemCtrl'})
                   .otherwise({redirectTo: '/collections'});
-  }]);
+  }])
+  .constant('APP_CONFIG',{
+        baseUrl:'https://beta.sciencebase.gov'
+  });
 
 }());
