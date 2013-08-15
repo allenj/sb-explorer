@@ -61,6 +61,8 @@
         <span class="fornav"><i class="icon-search"></i></span>
       </div>
     </form>
+    <span ng-click="viewSettings.view = 'map'" class="glyphicon glyphicon-globe pull-right" ng-class="{selected: viewSettings.view == 'map'}"></span>
+    <span ng-click="viewSettings.view = 'gallery'" class="glyphicon glyphicon-picture pull-right" ng-class="{selected: viewSettings.view == 'gallery'}"></span>
   </div>
 </div>
 

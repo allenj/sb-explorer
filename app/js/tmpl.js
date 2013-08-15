@@ -1,4 +1,4 @@
-angular.module("explorer.tmpls", ["template/facetEntry.html", "template/facet.html", "template/filter.html", "template/item.html"]);
+angular.module("explorer.tmpls", ["template/facetEntry.html", "template/facet.html", "template/filter.html", "template/item.html", "template/slides.html"]);
 
 angular.module("template/facetEntry.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/facetEntry.html",
@@ -60,3 +60,34 @@ angular.module("template/item.html", []).run(["$templateCache", function($templa
     );
 }]);
 
+angular.module("template/slides.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("template/slides.html",
+        "<div class=\"span12\" id=\"itemCarouselContainer\">" +
+            "<carousel interval=\"carouselInterval\">" +
+                "<slide ng-repeat=\"slide in slides\" active=\"slide.active\">" +
+                    "<a href=\"{{slide.itemLink}}\">" +
+                        "<img ng-src=\"{{slide.image}}\" style=\"margin:auto;\">" +
+                    "</a>" +
+                    "<div class=\"carousel-caption\">" +
+                        "<a href=\"{{slide.itemLink}}\">" +
+                            "<h4 style=\"white-space: nowrap;overflow: hidden;text-overflow: ellipsis;\" title=\"{{slide.title}}\">{{slide.title}}</h4>" +
+                            "<p>{{slide.text}}</p>" +
+                        "</a>" +
+                    "</div>" +
+              "</slide>" +
+            "</carousel>" +
+        "</div>"
+    );
+}]);
+
+angular.module("template/map.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("template/map.html",
+        "<div class=\"container\">" +
+            "<div class=\"row\">" +
+                "<div class=\"span9\">" +
+                    "<leaflet center=\"center\" height=\"480px\" width=\"960px\" zoom=\"3\" lat=\"39.50\" lng=\"-95.35\"></leaflet>" +
+                "</div>" +
+            "</div>" +
+        "</div>"
+    );
+}]);

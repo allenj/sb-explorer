@@ -29,12 +29,7 @@ angular.module('explorer.controllers', [])
             SearchService.search($scope.q);
         };
 
-        $scope.changeView = function(view) {
-            var search = $location.search();
-            search.view = view;
-            $scope.view = view;
-            $location.search(search);
-        };
+        $scope.viewSettings = SearchService.viewSettings;
 
         $scope.$on('clear_search', function() {
             $scope.q = '';
@@ -45,6 +40,8 @@ angular.module('explorer.controllers', [])
         });
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
+        $scope.viewSettings = SearchService.viewSettings;
+
         SearchService.setPlaceHolder('Search Data');
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
@@ -74,6 +71,10 @@ angular.module('explorer.controllers', [])
 
         $scope.$on('clear_items', function() {
             $scope.items = [];
+        });
+
+        $scope.$on('changeView', function() {
+            $scope.view = $scope.view;
         });
 
         $rootScope.$broadcast('clear_search');
@@ -112,11 +113,12 @@ angular.module('explorer.controllers', [])
     .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', 'APP_CONFIG', function ($scope, $routeParams, Item, APP_CONFIG) {
         $scope.message = null;
         $scope.APP_CONFIG = APP_CONFIG;
-        var item = Item.get({itemId:$routeParams.itemId}
-            ,function() {
+        var item = Item.get({
+            itemId:$routeParams.itemId},
+            function() {
                 $scope.item = item;
-            }
-            ,function(response) {
+            },
+            function(response) {
                 //404 or bad
                 $scope.item = null;
                 if (response.status === 404) {

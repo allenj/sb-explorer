@@ -20,6 +20,10 @@ angular.module('explorer.services', ['ngResource']).
     })
     .factory('SearchService', function(ItemsResult, $rootScope) {
         var self = this;
+
+        self.viewSettings = {view: 'gallery'};
+        self.searchResults = {};
+
         self.searchParams = {};
         self.facets       = [];
         self.filters      = [];
@@ -34,8 +38,11 @@ angular.module('explorer.services', ['ngResource']).
 
             var result = ItemsResult.query(self._getSearchObj(self), function() {
                 self.items = result.items;
+                self.searchResults.items = result.items;
                 self.itemsTotal = result.total;
+                self.searchResults.total = result.total;
                 self.searchFacets = result.searchFacets;
+                self.searchResults.facets = result.searchFacets;
                 $rootScope.$broadcast('new_items');
             });
         };
@@ -178,7 +185,7 @@ angular.module('explorer.services', ['ngResource']).
     .factory('MapService', function() {
         var self = this;
 
-
+        self.map = {};
 
         return self;
     })

@@ -172,6 +172,7 @@ textarea {
 
 .navbar .glyphicon:hover {
   color: #fff;
+  cursor: pointer;
 }
 
 .navbar .glyphicon .selected {

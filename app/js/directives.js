@@ -88,6 +88,14 @@ angular.module('explorer.directives', [])
                 $scope.item.browseImageUri = $scope.item.browseImageUri !== undefined ? $scope.item.browseImage : $scope.grabBrowseImageUri();
             }
         };
+    }])
+    .directive("slides", [function () {
+        return {
+            restrict: 'AE',
+            replace: true,
+            transclude: true,
+            templateUrl: 'template/slides.html',
+            controller: "SlidesCtrl"
+        };
     }]);
-
 }());

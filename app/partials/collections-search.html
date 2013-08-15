@@ -21,30 +21,19 @@
 
 <div id="bd">
 
-  <div class="container" ng-controller="SlidesCtrl">
+  <div class="container">
     <div class="row">
-      <div class="span12" id="itemCarouselContainer">
-
-        <carousel interval="carouselInterval">
-          <slide ng-repeat="slide in slides" active="slide.active">
-            <a href="{{slide.itemLink}}">
-              <img ng-src="{{slide.image}}" style="margin:auto;">
-            </a>
-            <div class="carousel-caption">
-              <!--<h4>Slide {{$index}}</h4>-->
-              <a href="{{slide.itemLink}}">
-                <h4 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" title="{{slide.title}}">{{slide.title}}</h4>
-                <p>{{slide.text}}</p>
-              </a>
-            </div>
-          </slide>
-        </carousel>
-
-
+      <div class="span9">
+        <div ng-hide="viewSettings.view != 'gallery'">
+          <slides/>
+        </div>
+        <div ng-hide="viewSettings.view != 'map'">
+          <leaflet center="center" height="480px" width="960px" zoom="3" lat="39.50" lng="-95.35"></leaflet>
+        </div>
       </div>
     </div>
   </div>
-
+  
   <div class="container" id="search-results">
     <div class="row">
       <div class="span3">

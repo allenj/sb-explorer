@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('explorer.leaflet-directive', [])
-    .directive('leaflet', ['SearchService', '$parse', function(SearchService, $parse) {
+    .directive('leaflet', ['SearchService', 'MapService', '$parse', function(SearchService, MapService, $parse) {
 
         return {
             restrict: 'AE',
@@ -20,6 +20,8 @@ angular.module('explorer.leaflet-directive', [])
                 setElementCssDimensions();
                 $scope.leaflet = {};
                 $scope.leaflet.map = createMapWithControls();
+                MapService.map = $scope.leaflet.map;
+
 
                 function setElementCssDimensions() {
                     if (attrs.width) {
@@ -28,14 +30,14 @@ angular.module('explorer.leaflet-directive', [])
                     if (attrs.height) {
                         $element.css('height', attrs.height);
                     }
-                };
+                }
 
                 function getBackgroundLayer(mapServerUrl, attribution) {
                     return new L.TileLayer(mapServerUrl, {
                         maxZoom: 19,
                         attribution: attribution
                     });
-                };
+                }
 
                 function initMap(backgroundLayer) {
                     return new L.Map($element[0], {
@@ -47,7 +49,7 @@ angular.module('explorer.leaflet-directive', [])
                         center: new L.LatLng($scope.lat, $scope.lng),
                         zoom: $scope.zoom
                     });
-                };
+                }
 
                 function getDrawControl(features) {
                     return new L.Control.Draw({
@@ -62,7 +64,7 @@ angular.module('explorer.leaflet-directive', [])
                             featureGroup: features
                         }
                     });
-                };
+                }
 
                 function createMapWithControls() {
                     var backgroundLayer = getBackgroundLayer(
@@ -99,7 +101,7 @@ angular.module('explorer.leaflet-directive', [])
                     });
 
                     return map;
-                };
+                }
             }
         };
     }]);
