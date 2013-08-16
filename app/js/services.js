@@ -18,10 +18,13 @@ angular.module('explorer.services', ['ngResource']).
                 'relationships,usgscitation'}}
         });
     })
-    .factory('SearchService', function(ItemsResult, $rootScope) {
+    .factory('SearchService', function(ItemsResult, $rootScope, Item) {
         var self = this;
 
-        self.viewSettings = {view: 'gallery'};
+        self.viewSettings = {
+            view: 'gallery',
+            collectionItem:null
+        };
         self.searchResults = {};
 
         self.searchParams = {};
@@ -139,6 +142,20 @@ angular.module('explorer.services', ['ngResource']).
                 }
             }
         };
+
+        self.setCollectionId = function(collectionId){
+            self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId};
+            var item = Item.get({
+                    itemId:collectionId},
+                function() {
+                    self.viewSettings.collectionItem =  {id: item.id, title: item.title};
+                },
+                function(response) {
+                    //404 or bad
+                    self.viewSettings.collectionItem = {id: collectionId, title:'Error w/ Collection ID#' + collectionId};
+                }
+            );
+        }
 
         return self;
     })

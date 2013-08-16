@@ -40,6 +40,8 @@ angular.module('explorer.controllers', [])
         });
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
+        SearchService.setCollectionId($routeParams.parentId);
+        SearchService.viewSettings.collectionId = $routeParams.parentId;
         $scope.viewSettings = SearchService.viewSettings;
 
         SearchService.setPlaceHolder('Search Data');
@@ -110,13 +112,14 @@ angular.module('explorer.controllers', [])
         $scope.slides = dummySlides;
         $scope.carouselInterval = 5000;
     }])
-    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', 'APP_CONFIG', function ($scope, $routeParams, Item, APP_CONFIG) {
+    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', 'SearchService', 'APP_CONFIG', function ($scope, $routeParams, Item, SearchService, APP_CONFIG) {
         $scope.message = null;
         $scope.APP_CONFIG = APP_CONFIG;
         var item = Item.get({
             itemId:$routeParams.itemId},
             function() {
                 $scope.item = item;
+                //if (!SearchService.viewSettings.collectionItem.id) SearchService.setCollectionId(item.parentId);
             },
             function(response) {
                 //404 or bad
