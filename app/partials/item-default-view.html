@@ -56,7 +56,7 @@
       <h3>Identifiers</h3>
       <ul>
         <li><span class="sb-label">ID:</span> {{item.id}}</li>
-        <li><span class="sb-label">URI:</span> <a href="{{item.link.url}}">{{item.link.url}}</a></li>
+        <li><span class="sb-label">URI:</span> <a data-ng-href="{{item.link.url}}">{{item.link.url}}</a></li>
         <li data-ng-show="item.identifiers"><span class="sb-label">Alternate Identifiers:</span><br/>
           <ul>
             <li data-ng-repeat="identifier in item.identifiers">{{identifier}}</li>
@@ -77,7 +77,7 @@
     <div data-ng-show="item.relationships.total">
       <h3>Related Items</h3>
       <ul>
-        <li data-ng-repeat="relatedItem in item.relationships">{{relatedItem}}</li>
+        <li data-ng-repeat="relLink in item.relationships.links"><a data-ng-href="{{relLink.url}}">{{relLink.title}}</a></li>
       </ul>
     </div>
 
@@ -86,7 +86,7 @@
       <h3>Web Links</h3>
       <ul>
         <li data-ng-repeat="webLink in item.webLinks">
-          <a href="{{webLink.uri}}" rel="{{webLink.rel}}" title="{{webLink.typeLabel}}">{{webLink.title}}</a>
+          <a data-ng-href="{{webLink.uri}}" rel="{{webLink.rel}}" title="{{webLink.typeLabel}}">{{webLink.title}}</a>
         </li>
       </ul>
     </div>
@@ -95,7 +95,7 @@
       <h3>Distribution Links</h3>
       <ul>
         <li data-ng-repeat="dl in item.distributionLinks">
-          <a href="{{dl.uri}}" rel="{{dl.rel}}" title="{{dl.typeLabel}}">{{dl.title}}</a>
+          <a data-ng-href="{{dl.uri}}" rel="{{dl.rel}}" title="{{dl.typeLabel}}">{{dl.title}}</a>
         </li>
       </ul>
     </div>
@@ -122,6 +122,15 @@
     </div>
 
 
+    <div data-ng-show="item.facets">
+      <h3>Extensions</h3>
+      <div data-ng-repeat="facet in item.facets">
+        <h4>{{facet.className}}</h4>
+        <pre>{{ facet | json }}</pre>
+      </div>
+
+    </div>
+
 
 
     <!--
@@ -135,7 +144,7 @@ extents,facets,files,permissions?,distributionLinks,previewImage,locked
 optional fields:
 relationships,usgscitation
 
-NOT YET DISPLAYED: summary, hasChildren, parentId, systemTypes, spatial, extents, facets, files, permissions,distributionLinks, previewImage, locked
+NOT YET DISPLAYED: summary, hasChildren, parentId, systemTypes, spatial, extents, facets, files, permissions, locked
 
     -->
 
