@@ -55,6 +55,12 @@ angular.module("template/item.html", []).run(["$templateCache", function($templa
                 "<a ng-show=\"item.previewImage.large.uri\"class=\"label label-info dist-link\" href=\"{{item.previewImage.large.uri}}\">Large Image</a>" +
                 "<a ng-show=\"item.previewImage.original.uri\"class=\"label label-info dist-link\" href=\"{{item.previewImage.original.viewUri}}\">Full Image</a>" +
                 "</span>" +
+
+
+                "<a class=\"label label-info dist-link\" ng-repeat=\"webLink in item.webLinks\" href=\"{{webLink.uri}}\">" +
+                "{{webLink.title}}" +
+                "</a>" +
+
             "</div>" +
         "</div>"
     );
