@@ -144,15 +144,15 @@ angular.module('explorer.services', ['ngResource']).
         };
 
         self.setCollectionId = function(collectionId){
-            self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId};
+            self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId + ' (loading...)'};
             var item = Item.get({
                     itemId:collectionId},
                 function() {
-                    self.viewSettings.collectionItem =  {id: item.id, title: item.title};
+                    self.viewSettings.collectionItem =  {id: item.id, title: item.title, summary: item.summary};
                 },
                 function(response) {
                     //404 or bad
-                    self.viewSettings.collectionItem = {id: collectionId, title:'Error w/ Collection ID#' + collectionId};
+                    self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId, summary: 'Error: status=' + response.status};
                 }
             );
         }

@@ -54,14 +54,14 @@
 <!-- ScienceBase Header Template -->
 <div class="navbar navbar-inverse sticky shadowbox" ng-controller="NavCtrl">
   <div class="navbar-inner">
+
     <a class="brand" href="index.html">Data Explorer</a>
 
-
-    <span class="brand glyphicon glyphicon-arrow-right">
-      <a href="#/collections/{{viewSettings.collectionItem.id}}">
+    <span ng-show="viewSettings.collectionItem.id" style="display:block; float: left; font-size: 20px; padding: 10px 0; line-height: 20px;">
+      <a class="navbar-link" style="font-size: 20px;" href="#/collections/{{viewSettings.collectionItem.id}}" title="{{viewSettings.collectionItem.summary}}">
+        <span class="glyphicon glyphicon-arrow-right" style="font-size: 16px;"></span>
         {{viewSettings.collectionItem.title}}
       </a>
-
     </span>
 
     <form name="search" class="navbar-search pull-right" ng-submit="doSearch()">
