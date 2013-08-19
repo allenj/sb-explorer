@@ -13,7 +13,7 @@ angular.module("template/facetEntry.html", []).run(["$templateCache", function($
 
 angular.module("template/facet.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/facet.html",
-        "<div>" +
+        "<div ng-show=\"facet.total\">" +
             "<h5>{{facet.label}}</h5>" +
             "<ul class=\"nav nav-list\">" +
                 "<facet-entry ng-repeat=\"entry in facet.entries\"></facet-entry>" +
