@@ -46,7 +46,7 @@ angular.module('explorer.controllers', [])
 
         SearchService.setPlaceHolder('Search Data');
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
-        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
+        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
 
         SearchService.searchParams.offset = 0;
@@ -135,7 +135,7 @@ angular.module('explorer.controllers', [])
     }])
     .controller('MapSearchCtrl', [ '$scope', 'SearchService', function($scope, SearchService) {
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks', 'previewImage', 'spatial'];
-        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
+        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
 
         SearchService.searchParams.offset = 0;
         delete SearchService.searchParams.browseCategory;
