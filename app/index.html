@@ -10,6 +10,13 @@
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/standardHeader.css">
+  <link rel="stylesheet" href="css/bootstrap-glyphicons.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <link rel="stylesheet" href="css/leaflet.draw.css" />
+  <link rel="stylesheet" href="css/leaflet.draw.ie.css" />
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
   <!-- <link href="css/usgs-common.css" rel="stylesheet" media="screen"> -->
   <!-- <link href="css/usgs-ibc-se-common.css" rel="stylesheet" media="screen"> -->
   <style>
@@ -47,13 +54,24 @@
 <!-- ScienceBase Header Template -->
 <div class="navbar navbar-inverse sticky shadowbox" ng-controller="NavCtrl">
   <div class="navbar-inner">
+
     <a class="brand" href="index.html">Data Explorer</a>
+
+    <span ng-show="viewSettings.collectionItem.id" style="display:block; float: left; font-size: 20px; padding: 10px 0; line-height: 20px;">
+      <a class="navbar-link" style="font-size: 20px;" href="#/collections/{{viewSettings.collectionItem.id}}" title="{{viewSettings.collectionItem.summary}}">
+        <span class="glyphicon glyphicon-arrow-right" style="font-size: 16px;"></span>
+        {{viewSettings.collectionItem.title}}
+      </a>
+    </span>
+
     <form name="search" class="navbar-search pull-right" ng-submit="doSearch()">
       <div class="input-append" >
         <input ng-model="q" type="text" class="search-query" placeHolder="{{placeHolder}}">
         <span class="fornav"><i class="icon-search"></i></span>
       </div>
     </form>
+    <span ng-click="viewSettings.view = 'map'" class="glyphicon glyphicon-globe pull-right" ng-class="{selected: viewSettings.view == 'map'}"></span>
+    <span ng-click="viewSettings.view = 'gallery'" class="glyphicon glyphicon-picture pull-right" ng-class="{selected: viewSettings.view == 'gallery'}"></span>
   </div>
 </div>
 
@@ -91,6 +109,7 @@
 <script src="js/controllers.js"></script>
 <script src="js/filters.js"></script>
 <script src="js/directives.js"></script>
+<script src="js/leaflet.js"></script>
 <script src="lib/modernizr/modernizr-latest.js"></script>
 <script src="lib/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="lib/bootstrap/bootstrap.min.js"></script>
@@ -100,14 +119,13 @@
 <script src="lib/jquery-waypoints/waypoints-sticky.min.js"></script>
 <script src="lib/angular-ui/ui-bootstrap-tpls-0.3.0.js"></script>
 <script src="lib/jquery.ba-bbq/jquery.ba-bbq.min.js"></script>
-
+<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+<script src="lib/leaflet.draw/leaflet.draw.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function () {
     $('.sticky').waypoint('sticky');
   });
-
-
 </script>
 </body>
 </html>

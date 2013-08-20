@@ -18,8 +18,14 @@ angular.module('explorer.services', ['ngResource']).
                 'relationships,usgscitation'}}
         });
     })
-    .factory('SearchService', function(ItemsResult, $rootScope) {
+    .factory('SearchService', function(ItemsResult, $rootScope, Item) {
         var self = this;
+
+        self.viewSettings = {
+            view: 'gallery',
+            collectionItem: null
+        };
+
         self.searchParams = {};
         self.facets       = [];
         self.filters      = [];
@@ -133,6 +139,20 @@ angular.module('explorer.services', ['ngResource']).
             }
         };
 
+        self.setCollectionId = function(collectionId){
+            self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId + ' (loading...)'};
+            var item = Item.get({
+                    itemId:collectionId},
+                function() {
+                    self.viewSettings.collectionItem =  {id: item.id, title: item.title, summary: item.summary};
+                },
+                function(response) {
+                    //404 or bad
+                    self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId, summary: 'Error: status=' + response.status};
+                }
+            );
+        }
+
         return self;
     })
     .factory('ImageUtilService', function() {
@@ -172,6 +192,13 @@ angular.module('explorer.services', ['ngResource']).
             return galleryImageUri;
         };
 
+
+        return self;
+    })
+    .factory('MapService', function() {
+        var self = this;
+
+        self.map = {};
 
         return self;
     })

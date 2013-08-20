@@ -21,13 +21,15 @@ angular.module('explorer.controllers', [])
 
         SearchService.search();
     }])
-    .controller('NavCtrl', [ '$scope', '$rootScope', 'SearchService', function ($scope, $rootScope, SearchService) {
+    .controller('NavCtrl', [ '$scope', '$rootScope', 'SearchService', '$location', function ($scope, $rootScope, SearchService, $location) {
         $scope.doSearch = function() {
             $rootScope.$broadcast('clear_items');
             SearchService.searchParams.offset = 0;
             SearchService.searchParams.q = $scope.q;
             SearchService.search($scope.q);
         };
+
+        $scope.viewSettings = SearchService.viewSettings;
 
         $scope.$on('clear_search', function() {
             $scope.q = '';
@@ -38,9 +40,13 @@ angular.module('explorer.controllers', [])
         });
     }])
     .controller('SearchCtrl', [ '$scope', '$routeParams', '$location', 'SearchService', '$rootScope', function ($scope, $routeParams, $location, SearchService, $rootScope) {
+        SearchService.setCollectionId($routeParams.parentId);
+        SearchService.viewSettings.collectionId = $routeParams.parentId;
+        $scope.viewSettings = SearchService.viewSettings;
+
         SearchService.setPlaceHolder('Search Data');
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];
-        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'facets.facetName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
+        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
         SearchService.filters = [{key: 'ancestors', val: $routeParams.parentId}];
 
         SearchService.searchParams.offset = 0;
@@ -67,6 +73,10 @@ angular.module('explorer.controllers', [])
 
         $scope.$on('clear_items', function() {
             $scope.items = [];
+        });
+
+        $scope.$on('changeView', function() {
+            $scope.view = $scope.view;
         });
 
         $rootScope.$broadcast('clear_search');
@@ -102,14 +112,16 @@ angular.module('explorer.controllers', [])
         $scope.slides = dummySlides;
         $scope.carouselInterval = 5000;
     }])
-    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', 'APP_CONFIG', function ($scope, $routeParams, Item, APP_CONFIG) {
+    .controller('ItemCtrl', [ '$scope', '$routeParams', 'Item', 'SearchService', 'APP_CONFIG', function ($scope, $routeParams, Item, SearchService, APP_CONFIG) {
         $scope.message = null;
         $scope.APP_CONFIG = APP_CONFIG;
-        var item = Item.get({itemId:$routeParams.itemId}
-            ,function() {
+        var item = Item.get({
+            itemId:$routeParams.itemId},
+            function() {
                 $scope.item = item;
-            }
-            ,function(response) {
+                //if (!SearchService.viewSettings.collectionItem.id) SearchService.setCollectionId(item.parentId);
+            },
+            function(response) {
                 //404 or bad
                 $scope.item = null;
                 if (response.status === 404) {
@@ -120,28 +132,62 @@ angular.module('explorer.controllers', [])
                 }
             }
         );
+    }])
+    .controller('MapSearchCtrl', [ '$scope', 'SearchService', function($scope, SearchService) {
+        SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks', 'previewImage', 'spatial'];
+        SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
+
+        SearchService.searchParams.offset = 0;
+        delete SearchService.searchParams.browseCategory;
+
+        $scope.items = [];
+        $scope.itemsTotal = 0;
+        $scope.searchFacets = [];
+        $scope.busy = false;
+        $scope.filterCount = 0;
+
+        $scope.$on('new_items', function() {
+            $scope.items = $scope.items.concat(SearchService.items);
+            $scope.itemsTotal = SearchService.itemsTotal;
+            $scope.searchFacets = SearchService.searchFacets;
+            $scope.busy = false;
+            $scope.filterCount = SearchService.filterCount();
+            $scope.filters = SearchService.filters;
+        });
+
+        $scope.$on('clear_items', function() {
+            $scope.items = [];
+        });
+
+        // Infinite scroll
+        $scope.nextPage = function() {
+            if ($scope.busy) return;
+            $scope.busy = true;
+            SearchService.searchParams.offset += 20;
+            SearchService.search();
+        };
     }]);
 
 
 var dummySlides = [
-    {image:"img/slides/ClimateChange.png", title:"", text:""},
-    {image:"img/slides/DataToolsTechnology.png", title:"", text:""},
-    {image:"img/slides/EarthCharacteristics.png", title:"", text:""},
-    {image:"img/slides/EcologyEnvironment.png", title:"", text:""},
-    {image:"img/slides/EnergyMinerals.png", title:"", text:""},
-    {image:"img/slides/EnvironmentalIssues.png", title:"", text:""},
-    {image:"img/slides/GeographicAnalysisMapping.png", title:"", text:""},
-    {image:"img/slides/GeologicalProcesses.png", title:"", text:""},
-    {image:"img/slides/HydrologicalProcesses.png", title:"", text:""},
-    {image:"img/slides/MappingRemoteSensingGeospatialData.png", title:"", text:""},
-    {image:"img/slides/NaturalHazards.png", title:"", text:""},
-    {image:"img/slides/OceansCoastlines.png", title:"", text:""},
-    {image:"img/slides/PlanetaryScience.png", title:"", text:""},
-    {image:"img/slides/Planets.png", title:"", text:""},
-    {image:"img/slides/PlantsAnimals.png", title:"", text:""},
-    {image:"img/slides/TechniquesMethods.png", title:"", text:""},
-    {image:"img/slides/Water.png", title:"", text:""},
-    {image:"img/slides/WaterResources.png", title:"", text:""}
+    {image:"../img/slides/ClimateChange.png", title:"", text:""},
+    {image:"../img/slides/DataToolsTechnology.png", title:"", text:""},
+    {image:"../img/slides/EarthCharacteristics.png", title:"", text:""},
+    {image:"../img/slides/EcologyEnvironment.png", title:"", text:""},
+    {image:"../img/slides/EnergyMinerals.png", title:"", text:""},
+    {image:"../img/slides/EnvironmentalIssues.png", title:"", text:""},
+    {image:"../img/slides/GeographicAnalysisMapping.png", title:"", text:""},
+    {image:"../img/slides/GeologicalProcesses.png", title:"", text:""},
+    {image:"../img/slides/HydrologicalProcesses.png", title:"", text:""},
+    {image:"../img/slides/MappingRemoteSensingGeospatialData.png", title:"", text:""},
+    {image:"../img/slides/NaturalHazards.png", title:"", text:""},
+    {image:"../img/slides/OceansCoastlines.png", title:"", text:""},
+    {image:"../img/slides/PlanetaryScience.png", title:"", text:""},
+    {image:"../img/slides/Planets.png", title:"", text:""},
+    {image:"../img/slides/PlantsAnimals.png", title:"", text:""},
+    {image:"../img/slides/TechniquesMethods.png", title:"", text:""},
+    {image:"../img/slides/Water.png", title:"", text:""},
+    {image:"../img/slides/WaterResources.png", title:"", text:""}
 ];
 
 }());
