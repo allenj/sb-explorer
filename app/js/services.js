@@ -151,7 +151,7 @@ angular.module('explorer.services', ['ngResource']).
                     self.viewSettings.collectionItem = {id: collectionId, title:'Collection ID#' + collectionId, summary: 'Error: status=' + response.status};
                 }
             );
-        }
+        };
 
         return self;
     })

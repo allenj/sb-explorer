@@ -73,7 +73,7 @@ angular.module('explorer.filters', [])
     .filter('onlyWithFilterLabel', function() {
         return function(input) {
             var itemsWithFilterLabel = jQuery.grep(input, function(n, i){
-                return (n.filterLabel != undefined);
+                return (n.filterLabel !== undefined);
             });
 
             return itemsWithFilterLabel;
