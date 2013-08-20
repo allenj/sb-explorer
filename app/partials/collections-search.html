@@ -39,7 +39,7 @@
       <div class="span3">
         <div id="search-facets">
           <h5>Items <span class="badge badge-info pull-right">{{items.length | number}} / {{itemsTotal | number}}</span></h5>
-          <div>
+          <div ng-show="filters|onlyWithFilterLabel">
             <h5>Applied Filters</h5>
             <ul class="nav nav-list">
               <filter ng-repeat="filter in filters"></filter>
