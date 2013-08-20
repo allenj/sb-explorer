@@ -1,4 +1,4 @@
-angular.module("explorer.tmpls", ["template/facetEntry.html", "template/facet.html", "template/filter.html", "template/item.html"]);
+angular.module("explorer.tmpls", ["template/facetEntry.html", "template/facet.html", "template/filter.html", "template/item.html", "template/slides.html"]);
 
 angular.module("template/facetEntry.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/facetEntry.html",
@@ -13,7 +13,7 @@ angular.module("template/facetEntry.html", []).run(["$templateCache", function($
 
 angular.module("template/facet.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/facet.html",
-        "<div>" +
+        "<div ng-show=\"facet.total\">" +
             "<h5>{{facet.label}}</h5>" +
             "<ul class=\"nav nav-list\">" +
                 "<facet-entry ng-repeat=\"entry in facet.entries\"></facet-entry>" +
@@ -55,8 +55,45 @@ angular.module("template/item.html", []).run(["$templateCache", function($templa
                 "<a ng-show=\"item.previewImage.large.uri\"class=\"label label-info dist-link\" href=\"{{item.previewImage.large.uri}}\">Large Image</a>" +
                 "<a ng-show=\"item.previewImage.original.uri\"class=\"label label-info dist-link\" href=\"{{item.previewImage.original.viewUri}}\">Full Image</a>" +
                 "</span>" +
+
+
+                "<a class=\"label label-info dist-link\" ng-repeat=\"webLink in item.webLinks\" href=\"{{webLink.uri}}\">" +
+                "{{webLink.title}}" +
+                "</a>" +
+
             "</div>" +
         "</div>"
     );
 }]);
 
+angular.module("template/slides.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("template/slides.html",
+        "<div class=\"span12\" id=\"itemCarouselContainer\">" +
+            "<carousel interval=\"carouselInterval\">" +
+                "<slide ng-repeat=\"slide in slides\" active=\"slide.active\">" +
+                    "<a href=\"{{slide.itemLink}}\">" +
+                        "<img ng-src=\"{{slide.image}}\" style=\"margin:auto;\">" +
+                    "</a>" +
+                    "<div class=\"carousel-caption\">" +
+                        "<a href=\"{{slide.itemLink}}\">" +
+                            "<h4 style=\"white-space: nowrap;overflow: hidden;text-overflow: ellipsis;\" title=\"{{slide.title}}\">{{slide.title}}</h4>" +
+                            "<p>{{slide.text}}</p>" +
+                        "</a>" +
+                    "</div>" +
+              "</slide>" +
+            "</carousel>" +
+        "</div>"
+    );
+}]);
+
+angular.module("template/map.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("template/map.html",
+        "<div class=\"container\">" +
+            "<div class=\"row\">" +
+                "<div class=\"span9\">" +
+                    "<leaflet center=\"center\" height=\"480px\" width=\"960px\" zoom=\"3\" lat=\"39.50\" lng=\"-95.35\"></leaflet>" +
+                "</div>" +
+            "</div>" +
+        "</div>"
+    );
+}]);

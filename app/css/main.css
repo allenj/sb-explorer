@@ -163,6 +163,22 @@ textarea {
   opacity: 1;
 }
 
+.navbar .glyphicon {
+  line-height: 1.5;
+  color: #999999;
+  font-size: 30px;
+  margin: 0 5px;
+}
+
+.navbar .glyphicon:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbar .glyphicon .selected {
+  color: #3a87ad;
+}
+
 .collection-menu.stuck {
   width: 700px;
 }
@@ -232,6 +248,19 @@ textarea {
 
 #search-results {
   margin-top: 10px;
+}
+
+.map-search-container {
+  min-height: 100%;
+  position: absolute;
+}
+
+.map-search-top {
+  height: 480px;
+}
+
+.map-search-bottom {
+  
 }
 
 /* ==========================================================================
