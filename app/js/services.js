@@ -22,7 +22,6 @@ angular.module('explorer.services', ['ngResource']).
         var self = this;
 
         self.viewSettings = {view: 'gallery'};
-        self.searchResults = {};
 
         self.searchParams = {};
         self.facets       = [];
@@ -38,11 +37,8 @@ angular.module('explorer.services', ['ngResource']).
 
             var result = ItemsResult.query(self._getSearchObj(self), function() {
                 self.items = result.items;
-                self.searchResults.items = result.items;
                 self.itemsTotal = result.total;
-                self.searchResults.total = result.total;
                 self.searchFacets = result.searchFacets;
-                self.searchResults.facets = result.searchFacets;
                 $rootScope.$broadcast('new_items');
             });
         };

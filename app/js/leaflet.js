@@ -56,7 +56,7 @@ angular.module('explorer.leaflet-directive', [])
                         position: 'topright',
                         draw: {
                             polyline: false,
-                            polygon: true,
+                            polygon: false,
                             circle: false,
                             marker: false
                         },
