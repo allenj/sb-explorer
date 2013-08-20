@@ -7,7 +7,7 @@
 
 angular.module('explorer.directives', [])
     .directive('appInfo', ['appInfo', function (version) {
-        return function(scope, elm, attrs) {
+        return function (scope, elm, attrs) {
         elm.text(version);
         };
     }])
@@ -16,7 +16,7 @@ angular.module('explorer.directives', [])
             restrict: 'AE',
             replace: true,
             templateUrl: 'template/facet.html',
-            link: function($scope, $element, attrs) {
+            link: function ($scope, $element, attrs) {
                 //console.log($scope);
             }
         };
@@ -31,24 +31,33 @@ angular.module('explorer.directives', [])
                 // entryTerm: '=',
                 // entryCount: '='
             // },
-            link: function($scope, $element, attrs) {
+            link: function ($scope, $element, attrs) {
                 $scope.applyFilter = function() {
                     if ($scope.$parent.facet && $scope.entry.term) {
-                        SearchService.applyFilter($scope.$parent.facet, $scope.entry.term);
+                        SearchService.applyFilter({facet: $scope.$parent.facet, val: $scope.entry.term});
                     }
                 };
             }
         };
     }])
-    .directive('filter', ['SearchService', function (SearchService) {
+    .directive('filter', ['SearchService', 'MapService', function (SearchService, MapService) {
         return {
             restrict: 'AE',
             replace: true,
             transclude: true,
             templateUrl: 'template/filter.html',
-            link: function($scope, $element, attrs) {
+            link: function ($scope, $element, attrs) {
                 $scope.removeFilter = function() {
-                    SearchService.removeFilter($scope.filter.key, $scope.filter.val);
+                    var facet = {
+                        name: $scope.filter.key,
+                        label: $scope.filter.val,
+                        key: $scope.filter.key
+                    };
+                    SearchService.removeFilter({facet: facet, val: $scope.filter.val});
+
+                    if (facet.key === 'spatialQuery') {
+                        MapService.removeLayerWithQuery($scope.filter.val);
+                    }
                 };
             }
         };
@@ -59,10 +68,10 @@ angular.module('explorer.directives', [])
             replace: true,
             transclude: true,
             templateUrl: 'template/item.html',
-            link: function($scope, $element, attrs) {
+            link: function ($scope, $element, attrs) {
                 //console.log($scope.item.id, $scope.item.$$hashKey);
 
-                $scope.grabBrowseImageUri = function() {
+                $scope.grabBrowseImageUri = function () {
                     var browseImageUri;
                     //console.log("grabBrowseImageUri", $scope.item.id, $scope.item.$$hashKey);
                     if ($scope.item.previewImage){

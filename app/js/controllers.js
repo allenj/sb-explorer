@@ -10,7 +10,7 @@ angular.module('explorer.controllers', [])
         SearchService.filters = [];
         SearchService.fields = ['title', 'summary'];
 
-        $scope.$on('new_items', function() {
+        $scope.$on('new_items', function () {
             var half = Math.ceil(SearchService.items.length / 2);
             $scope.col1 = SearchService.items.slice(0, half);
             $scope.col2 = [];
@@ -22,7 +22,7 @@ angular.module('explorer.controllers', [])
         SearchService.search();
     }])
     .controller('NavCtrl', [ '$scope', '$rootScope', 'SearchService', '$location', function ($scope, $rootScope, SearchService, $location) {
-        $scope.doSearch = function() {
+        $scope.doSearch = function () {
             $rootScope.$broadcast('clear_items');
             SearchService.searchParams.offset = 0;
             SearchService.searchParams.q = $scope.q;
@@ -31,11 +31,11 @@ angular.module('explorer.controllers', [])
 
         $scope.viewSettings = SearchService.viewSettings;
 
-        $scope.$on('clear_search', function() {
+        $scope.$on('clear_search', function () {
             $scope.q = '';
         });
 
-        $scope.$on('new_items', function() {
+        $scope.$on('new_items', function () {
             if (SearchService.searchParams.q) $scope.q = SearchService.searchParams.q;
         });
     }])
@@ -62,7 +62,7 @@ angular.module('explorer.controllers', [])
         $scope.busy = false;
         $scope.filterCount = 0;
 
-        $scope.$on('new_items', function() {
+        $scope.$on('new_items', function () {
             $scope.items = $scope.items.concat(SearchService.items);
             $scope.itemsTotal = SearchService.itemsTotal;
             $scope.searchFacets = SearchService.searchFacets;
@@ -71,19 +71,15 @@ angular.module('explorer.controllers', [])
             $scope.filters = SearchService.filters;
         });
 
-        $scope.$on('clear_items', function() {
+        $scope.$on('clear_items', function () {
             $scope.items = [];
-        });
-
-        $scope.$on('changeView', function() {
-            $scope.view = $scope.view;
         });
 
         $rootScope.$broadcast('clear_search');
         SearchService.search();
 
         // Infinite scroll
-        $scope.nextPage = function() {
+        $scope.nextPage = function () {
             if ($scope.busy) return;
             $scope.busy = true;
             SearchService.searchParams.offset += 20;
@@ -103,7 +99,7 @@ angular.module('explorer.controllers', [])
             });
         });
 
-        $scope.$on('clear_items', function() {
+        $scope.$on('clear_items', function () {
             $scope.slides = [];
         });
 
@@ -117,11 +113,11 @@ angular.module('explorer.controllers', [])
         $scope.APP_CONFIG = APP_CONFIG;
         var item = Item.get({
             itemId:$routeParams.itemId},
-            function() {
+            function () {
                 $scope.item = item;
                 //if (!SearchService.viewSettings.collectionItem.id) SearchService.setCollectionId(item.parentId);
             },
-            function(response) {
+            function (response) {
                 //404 or bad
                 $scope.item = null;
                 if (response.status === 404) {
@@ -133,7 +129,7 @@ angular.module('explorer.controllers', [])
             }
         );
     }])
-    .controller('MapSearchCtrl', [ '$scope', 'SearchService', function($scope, SearchService) {
+    .controller('MapSearchCtrl', [ '$scope', 'SearchService', function ($scope, SearchService) {
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks', 'previewImage', 'spatial'];
         SearchService.facets = ['browseCategory', 'browseType', 'partyWithName', 'tagType','tagScheme', 'tagNameForTypeAndScheme'];
 
@@ -146,7 +142,7 @@ angular.module('explorer.controllers', [])
         $scope.busy = false;
         $scope.filterCount = 0;
 
-        $scope.$on('new_items', function() {
+        $scope.$on('new_items', function () {
             $scope.items = $scope.items.concat(SearchService.items);
             $scope.itemsTotal = SearchService.itemsTotal;
             $scope.searchFacets = SearchService.searchFacets;
@@ -155,12 +151,12 @@ angular.module('explorer.controllers', [])
             $scope.filters = SearchService.filters;
         });
 
-        $scope.$on('clear_items', function() {
+        $scope.$on('clear_items', function () {
             $scope.items = [];
         });
 
         // Infinite scroll
-        $scope.nextPage = function() {
+        $scope.nextPage = function () {
             if ($scope.busy) return;
             $scope.busy = true;
             SearchService.searchParams.offset += 20;

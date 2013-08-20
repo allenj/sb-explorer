@@ -16,12 +16,11 @@ angular.module('explorer.leaflet-directive', [])
                 lng: '=lng'
             },
             template: '<div class="angular-leaflet-map"></div>',
-            link: function($scope, $element, attrs) {
+            link: function ($scope, $element, attrs) {
                 setElementCssDimensions();
                 $scope.leaflet = {};
                 $scope.leaflet.map = createMapWithControls();
                 MapService.map = $scope.leaflet.map;
-
 
                 function setElementCssDimensions() {
                     if (attrs.width) {
@@ -84,23 +83,34 @@ angular.module('explorer.leaflet-directive', [])
 
                         if (type === 'rectangle') {
                             var coordinates = layer.toGeoJSON().geometry.coordinates[0];
-                            var topLeft = coordinates[0];
-                            var bottomRight = coordinates[2];
-                            var facet = {
-                                name: 'spatialQuery',
-                                label: 'Spatial'
-                            };
-                            var query = {
-                                type: 'envelope',
-                                coordinates: [topLeft, bottomRight]
-                            };
-                            SearchService.applyFilter(facet, JSON.stringify(query));
+                            SearchService.applyFilter(_createSpatialFilter(coordinates[0], coordinates[2]));
                         }
 
                         features.addLayer(layer);
+                        MapService.layers.push(layer);
+                    });
+                    
+                    map.on('draw:deleted', function (e) {
+                        var layers = e.layers;
+
+                        layers.eachLayer(function (layer) {
+                            var coordinates = layer.toGeoJSON().geometry.coordinates[0];
+                            SearchService.removeFilter(_createSpatialFilter(coordinates[0], coordinates[2]));
+                            MapService.layers.splice(MapService.layers.indexOf(layer), 1);
+                        });
                     });
 
                     return map;
+                }
+
+                function _createSpatialFilter(topLeft, bottomRight) {
+                    var facet = { name: 'spatialQuery', label: 'Spatial', key: 'spatial' };
+                    var query = { type: 'envelope', coordinates: [topLeft, bottomRight] };
+
+                    return {
+                        facet: facet,
+                        val: JSON.stringify(query)
+                    };
                 }
             }
         };
