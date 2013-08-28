@@ -10,6 +10,9 @@ angular.module('explorer.controllers', [])
         SearchService.filters = [];
         SearchService.fields = ['title', 'summary'];
 
+        $scope.viewSettings = SearchService.viewSettings;
+        $scope.viewSettings.view = '';
+
         $scope.$on('new_items', function () {
             var half = Math.ceil(SearchService.items.length / 2);
             $scope.col1 = SearchService.items.slice(0, half);
@@ -43,6 +46,7 @@ angular.module('explorer.controllers', [])
         SearchService.setCollectionId($routeParams.parentId);
         SearchService.viewSettings.collectionId = $routeParams.parentId;
         $scope.viewSettings = SearchService.viewSettings;
+        $scope.viewSettings.view = 'gallery';
 
         SearchService.setPlaceHolder('Search Data');
         SearchService.fields = ['title', 'summary', 'distributionLinks', 'webLinks','previewImage'];

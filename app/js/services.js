@@ -22,7 +22,7 @@ angular.module('explorer.services', ['ngResource']).
         var self = this;
 
         self.viewSettings = {
-            view: 'gallery',
+            view: '',
             collectionItem: null,
             showFilters: false
         };
